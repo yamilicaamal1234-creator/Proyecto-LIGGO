@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "HcTCS568UdE=",
+  "success": true,
+  "projectFilePath": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\App.Api\\App.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Natsu\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.10\\microsoft.aspnetcore.openapi.9.0.10.nupkg.sha512",
+    "C:\\Users\\Natsu\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
