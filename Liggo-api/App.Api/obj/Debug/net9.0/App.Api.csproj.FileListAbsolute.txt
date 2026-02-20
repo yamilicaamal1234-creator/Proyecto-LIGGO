@@ -6,16 +6,9 @@ D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\App.Api.deps.j
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\App.Api.runtimeconfig.json
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\App.Api.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\App.Api.pdb
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\FirebaseAdmin.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Google.Api.Gax.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Google.Api.Gax.Rest.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Google.Apis.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Google.Apis.Auth.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Google.Apis.Core.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\MediatR.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\MediatR.Contracts.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
@@ -27,12 +20,8 @@ D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.Iden
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Microsoft.OpenApi.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\MySqlConnector.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Newtonsoft.Json.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\System.CodeDom.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\System.Diagnostics.DiagnosticSource.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\System.Management.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\runtimes\win\lib\net7.0\System.Management.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\App.Application.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\App.Domain.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\App.Infrastructure.dll
@@ -62,3 +51,6 @@ D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\obj\Debug\net9.0\refint\App.Api
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\obj\Debug\net9.0\App.Api.pdb
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\obj\Debug\net9.0\App.Api.genruntimeconfig.cache
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\obj\Debug\net9.0\ref\App.Api.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\App.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
