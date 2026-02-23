@@ -1,18 +1,17 @@
+using Liggo.Domain.Enums;
+
 namespace Liggo.Domain.Entities.Billing;
 
-public class Customer
+public class Plan
 {
     public int Id { get; set; }
     public int TenantId { get; set; }
-    
-    // CRÍTICO: Aquí guardamos el orgId de Firebase (ej. "school_rayados")
-    public string ExternalId { get; set; } = string.Empty; 
-    
-    public string BusinessName { get; set; } = string.Empty;
-    public string TaxId { get; set; } = string.Empty; // RFC
-    public string AdminEmail { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public string Currency { get; set; } = "MXN";
+    public PlanFrequency Frequency { get; set; }
+    public bool IsActive { get; set; } = true;
 
     // Propiedades de navegación
     public Tenant Tenant { get; set; } = null!;
-    public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
 }

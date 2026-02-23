@@ -1,0 +1,12 @@
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\bin\Debug\net9.0\Liggo.Domain.deps.json
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\bin\Debug\net9.0\Liggo.Domain.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\bin\Debug\net9.0\Liggo.Domain.pdb
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\Liggo.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\Liggo.Domain.AssemblyInfoInputs.cache
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\Liggo.Domain.AssemblyInfo.cs
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\Liggo.Domain.csproj.CoreCompileInputs.cache
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\Liggo.Domain.sourcelink.json
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\Liggo.Domain.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\refint\Liggo.Domain.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\Liggo.Domain.pdb
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Domain\obj\Debug\net9.0\ref\Liggo.Domain.dll
