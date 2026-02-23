@@ -38,7 +38,9 @@ public static class DependencyInjection
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<ILedgerTransactionRepository, LedgerTransactionRepository>();
         services.AddScoped<ISystemUserRepository, SystemUserRepository>();
+        services.AddScoped<IIncidentRepository, IncidentRepository>();
+        services.AddScoped<ICalendarEventRepository, CalendarEventRepository>();
 
-        return services; // <- Faltaba esto
+        return services; 
     }
 }

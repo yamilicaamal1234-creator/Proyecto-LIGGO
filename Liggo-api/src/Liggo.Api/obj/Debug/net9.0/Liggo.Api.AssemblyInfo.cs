@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Liggo.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c5a9cfad3044f477fab9c1f77292b9fbac9614e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da7e85362e63f547e5af5f6b9b975966426cfd40")]
 [assembly: System.Reflection.AssemblyProductAttribute("Liggo.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Liggo.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

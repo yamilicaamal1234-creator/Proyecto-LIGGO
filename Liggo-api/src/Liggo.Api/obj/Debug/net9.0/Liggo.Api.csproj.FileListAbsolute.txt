@@ -29,7 +29,6 @@ D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Humanize
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\MediatR.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\MediatR.Contracts.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Microsoft.Build.Locator.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
@@ -169,3 +168,6 @@ D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\obj\Debug\net9.0\refint\L
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\obj\Debug\net9.0\Liggo.Api.pdb
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\obj\Debug\net9.0\Liggo.Api.genruntimeconfig.cache
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\obj\Debug\net9.0\ref\Liggo.Api.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
