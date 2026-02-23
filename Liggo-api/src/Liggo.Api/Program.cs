@@ -1,8 +1,11 @@
 using Liggo.Application;
 using Liggo.Infrastructure;
 using Liggo.Api.Middlewares;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", Path.Combine(builder.Environment.ContentRootPath, "FirebaseKey.json"));
 
 // 1. REGISTRAR LAS CAPAS DE CLEAN ARCHITECTURE
 // Llama a las configuraciones que hicimos en los días anteriores

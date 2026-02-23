@@ -171,3 +171,4 @@ D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\obj\Debug\net9.0\ref\Ligg
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Api\bin\Debug\net9.0\FirebaseKey.json

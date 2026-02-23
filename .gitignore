@@ -1,0 +1,7 @@
+# =========================
+# LLAVES Y SECRETOS LOCALES
+# =========================
+FirebaseKey.json
+**/FirebaseKey.json
+appsettings.Development.json
+appsettings.json
