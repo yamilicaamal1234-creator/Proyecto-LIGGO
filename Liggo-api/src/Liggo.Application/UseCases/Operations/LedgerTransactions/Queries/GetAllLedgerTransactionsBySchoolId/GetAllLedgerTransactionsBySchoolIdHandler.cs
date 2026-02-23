@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Liggo.Application.Interfaces.Operations;
 using Liggo.Application.UseCases.Operations.LedgerTransactions.Commands.CreateLedgerTransaction;
-using Liggo.Application.UseCases.Operations.LedgerTransactions.Queries.GetLedgerTransactionById;
+using Liggo.Application.UseCases.Operations.LedgerTransactions.Queries.Responses;
 
 namespace Liggo.Application.UseCases.Operations.LedgerTransactions.Queries.GetAllLedgerTransactionsBySchoolId;
 

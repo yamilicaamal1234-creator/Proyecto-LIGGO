@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using MediatR;
-using Liggo.Application.UseCases.Operations.LedgerTransactions.Queries.GetLedgerTransactionById;
+using Liggo.Application.UseCases.Operations.LedgerTransactions.Queries.Responses;
 
 namespace Liggo.Application.UseCases.Operations.LedgerTransactions.Queries.GetAllLedgerTransactionsByMemberId;
 
