@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Liggo.Application.UseCases.Billing.Customers.Commands.CreateCustomer;
 using Liggo.Application.UseCases.Billing.Customers.Queries.GetCustomerById;
+using Liggo.Application.UseCases.Billing.Customers.Queries.GetCustomersByTenantId;
 
 namespace Liggo.Api.Controllers.Billing;
 
@@ -34,5 +35,14 @@ public class CustomersController : ControllerBase
             return NotFound(new { message = $"No se encontró el Customer con ID {id}" });
 
         return Ok(customer);
+    }
+
+    [HttpGet("tenant/{tenantId}")]
+    public async Task<IActionResult> GetByTenantId(int tenantId)
+    {
+        // Esta lógica llamará a tu repositorio filtrando por tenantId
+        // Por simplicidad, asumo que crearemos un Query específico de MediatR para esto
+        var customers = await _sender.Send(new GetCustomersByTenantIdQuery(tenantId));
+        return Ok(customers);
     }
 }

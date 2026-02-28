@@ -1,0 +1,81 @@
+@page "/reports"
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-black text-[#0A1F44]">Reportes</h1>
+            <p class="text-slate-500 font-medium">Estadísticas generales y rendimiento de la academia.</p>
+        </div>
+        <button class="bg-white hover:bg-slate-50 text-[#0A1F44] px-6 py-3 rounded-xl font-bold transition-all shadow-sm border border-slate-100 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            Descargar PDF
+        </button>
+    </div>
+
+    @* KPIs de Reportes *@
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-50 text-center">
+            <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Asistencia Promedio</p>
+            <p class="text-4xl font-black text-[#0B6623] mt-2">87%</p>
+            <p class="text-xs font-bold text-slate-400 mt-2 tracking-widest">+5% vs mes anterior</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-50 text-center">
+            <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Goles por Partido</p>
+            <p class="text-4xl font-black text-[#0A1F44] mt-2">3.2</p>
+            <p class="text-xs font-bold text-slate-400 mt-2 tracking-widest">Promedio Sub-15</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-50 text-center">
+            <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Pagos al Día</p>
+            <p class="text-4xl font-black text-[#0B6623] mt-2">92%</p>
+            <p class="text-xs font-bold text-slate-400 mt-2 tracking-widest">Objetivo: 95%</p>
+        </div>
+    </div>
+
+    @* Tabla de Mejores Jugadores *@
+    <div class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-slate-50 overflow-hidden">
+        <div class="p-6 border-b border-slate-50">
+            <h3 class="text-lg font-bold text-[#0A1F44]">Mejores Jugadores por Categoría</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50/50 text-slate-400 text-xs font-bold uppercase tracking-widest">
+                    <tr>
+                        <th class="px-6 py-4">Jugador</th>
+                        <th class="px-6 py-4">Goles</th>
+                        <th class="px-6 py-4">Asistencias</th>
+                        <th class="px-6 py-4">Partidos</th>
+                        <th class="px-6 py-4">Calificación</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @foreach (var p in MockData.Players.Take(5))
+                    {
+                        <tr class="hover:bg-slate-50/50 transition-colors">
+                            <td class="px-6 py-5">
+                                <span class="text-sm font-bold text-[#0A1F44]">@p.Name</span>
+                            </td>
+                            <td class="px-6 py-5 text-sm font-bold text-slate-600">@p.Stats.Goals</td>
+                            <td class="px-6 py-5 text-sm font-bold text-slate-600">@p.Stats.Assists</td>
+                            <td class="px-6 py-5 text-sm font-bold text-slate-600">@p.Stats.Matches</td>
+                            <td class="px-6 py-5">
+                                <div class="flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-amber-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                    <span class="text-sm font-black text-[#0A1F44]">4.9</span>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        if (!Auth.IsAuthenticated) Nav.NavigateTo("/login");
+    }
+}

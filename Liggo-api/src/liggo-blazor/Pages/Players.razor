@@ -1,0 +1,74 @@
+@page "/players"
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<div class="space-y-8">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-black text-[#0A1F44]">Jugadores</h1>
+            <p class="text-slate-500 font-medium">Gestiona el directorio de deportistas de LIGGO.</p>
+        </div>
+        <button class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nuevo Jugador
+        </button>
+    </div>
+
+    @* Filtros Rápidos *@
+    <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+        @foreach (var cat in categories)
+        {
+            <button class="px-4 py-2 rounded-lg bg-white border border-slate-100 text-sm font-bold text-[#0A1F44] whitespace-nowrap hover:bg-slate-50 transition-colors shadow-sm">
+                @cat
+            </button>
+        }
+    </div>
+
+    @* Grilla de Jugadores *@
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        @if (players == null || !players.Any())
+        {
+            <div class="col-span-full p-20 text-center bg-white rounded-[3rem] shadow-xl border-4 border-dashed border-slate-50">
+                <div class="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-slate-50 mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0B6623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <h2 class="text-2xl font-black text-[#0A1F44]">Directorio Vacío</h2>
+                <p class="text-slate-400 font-medium mt-2">Aún no tienes jugadores registrados en tu escuela.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var p in players)
+            {
+                <div class="group relative overflow-hidden rounded-3xl bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 border border-slate-50">
+                    @* ... (Mantenemos el diseño del card pero con datos reales) *@
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    private string[] categories = { "Todos", "Sub-9", "Sub-11", "Sub-13", "Sub-15", "Sub-17" };
+    private List<PlayerDto>? players; // Cambiamos a lista real
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Auth.IsAuthenticated) 
+        {
+            Nav.NavigateTo("/login");
+            return;
+        }
+
+        // Aquí llamaremos a la API real filtrada por el TenantId del usuario
+        // Por ahora, al ser un usuario nuevo, la lista estará vacía (null o vacía)
+        players = new List<PlayerDto>(); 
+    }
+
+    public class PlayerDto {
+        public string Name { get; set; } = "";
+        public string Category { get; set; } = "";
+        public string Team { get; set; } = "";
+        public string Avatar { get; set; } = "";
+    }
+}

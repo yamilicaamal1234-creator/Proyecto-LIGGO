@@ -1,0 +1,122 @@
+@page "/login"
+@page "/"
+@inject AuthService Auth
+@inject NavigationManager Nav
+@using System.ComponentModel.DataAnnotations
+
+<div class="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-[#0A1F44] to-[#0B6623] px-4 py-12 font-sans antialiased">
+    <div class="w-full max-w-md border-none bg-white p-6 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] sm:p-10 rounded-[2rem] transition-all">
+        <div class="flex flex-col items-center pb-6">
+            @* Contenedor del logo: Tamaño mediano corregido para evitar que se vea aplastado *@
+            <div class="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-sm overflow-hidden p-3 border border-slate-100">
+                <img src="/images/logo.png" 
+                     class="max-h-full max-w-full object-contain" 
+                     alt="LIGGO Logo" 
+                     onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=L&backgroundColor=0B6623&fontFamily=Inter&fontWeight=900'" />
+            </div>
+            <h1 class="text-3xl font-bold tracking-tight text-[#0A1F44]">LIGGO</h1>
+            <p class="mt-2 text-sm font-medium text-slate-500">Plataforma de Gestión Deportiva</p>
+        </div>
+
+        <EditForm Model="@loginModel" OnValidSubmit="HandleLogin" class="space-y-6">
+            <DataAnnotationsValidator />
+            
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="p-3 bg-red-100 border border-red-400 text-red-700 rounded-xl text-xs font-bold text-center">
+                    @errorMessage
+                </div>
+            }
+
+            <div class="space-y-2">
+                <label for="email" class="text-sm font-bold text-[#0A1F44] ml-1">
+                    Correo electrónico
+                </label>
+                <InputText id="email" type="email" placeholder="ejemplo@liggo.com" @bind-Value="loginModel.Email"
+                    class="h-14 w-full px-5 border-2 border-slate-100 bg-slate-50/50 transition-all focus:border-[#0B6623] focus:bg-white focus:ring-4 focus:ring-[#0B6623]/10 outline-none rounded-2xl font-medium" />
+                <ValidationMessage For="@(() => loginModel.Email)" class="text-xs font-bold text-red-500 ml-1 mt-1" />
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex items-center justify-between ml-1">
+                    <label for="password" class="text-sm font-bold text-[#0A1F44]">
+                        Contraseña
+                    </label>
+                </div>
+                <InputText id="password" type="password" placeholder="••••••••" @bind-Value="loginModel.Password"
+                    class="h-14 w-full px-5 border-2 border-slate-100 bg-slate-50/50 transition-all focus:border-[#0B6623] focus:bg-white focus:ring-4 focus:ring-[#0B6623]/10 outline-none rounded-2xl font-medium" />
+                <ValidationMessage For="@(() => loginModel.Password)" class="text-xs font-bold text-red-500 ml-1 mt-1" />
+            </div>
+
+            <button type="submit" disabled="@isLoading"
+                class="h-14 w-full bg-[#0B6623] text-lg font-black text-white shadow-xl shadow-[#0B6623]/20 transition-all hover:bg-[#0A1F44] hover:shadow-[#0A1F44]/20 active:scale-[0.97] rounded-2xl mt-4 disabled:opacity-50">
+                @if (isLoading)
+                {
+                    <span>Iniciando sesión...</span>
+                }
+                else
+                {
+                    <span>Iniciar sesión</span>
+                }
+            </button>
+        </EditForm>
+
+        <div class="mt-10 space-y-4 text-center">
+            <a href="/forgot-password" class="block text-sm font-bold text-[#0A1F44] transition-colors hover:text-[#FFD700]">
+                ¿Olvidaste tu contraseña?
+            </a>
+            
+            <div class="pt-4 border-t border-slate-100">
+                <span class="text-sm font-medium text-slate-400">¿No tienes cuenta? </span>
+                <a href="/register" class="text-sm font-black text-[#0B6623] transition-colors hover:text-[#0A1F44]">
+                    Crear cuenta
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+
+    private string errorMessage = "";
+    private bool isLoading = false;
+
+    private async Task HandleLogin()
+    {
+        errorMessage = "";
+        isLoading = true;
+
+        var success = await Auth.LoginAsync(loginModel.Email, loginModel.Password);
+        
+        if (success)
+        {
+            Nav.NavigateTo("/customers");
+        }
+        else
+        {
+            errorMessage = "Credenciales inválidas o usuario no encontrado.";
+        }
+        
+        isLoading = false;
+    }
+
+    public class LoginModel
+    {
+        [Required(ErrorMessage = "El correo es obligatorio")]
+        [EmailAddress(ErrorMessage = "Formato de correo inválido")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "La contraseña es obligatoria")]
+        [MinLength(6, ErrorMessage = "Mínimo 6 caracteres")]
+        public string Password { get; set; } = "";
+    }
+
+    protected override void OnInitialized()
+    {
+        if (Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/dashboard");
+        }
+    }
+}

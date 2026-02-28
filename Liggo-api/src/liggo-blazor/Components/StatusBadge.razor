@@ -1,0 +1,26 @@
+<span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 font-medium @GetConfig().ClassName">
+    @GetConfig().Label
+</span>
+
+@code {
+    [Parameter] public string Status { get; set; } = "";
+
+    private class BadgeConfig { public string Label { get; set; } = ""; public string ClassName { get; set; } = ""; }
+
+    private BadgeConfig GetConfig() {
+        return Status.ToLower() switch {
+            "al_dia" => new BadgeConfig { Label = "Al día", ClassName = "bg-primary/15 text-primary border-primary/30" },
+            "pagado" => new BadgeConfig { Label = "Pagado", ClassName = "bg-primary/15 text-primary border-primary/30" },
+            "activa" => new BadgeConfig { Label = "Activa", ClassName = "bg-primary/15 text-primary border-primary/30" },
+            "pendiente" => new BadgeConfig { Label = "Pendiente", ClassName = "bg-warning/15 text-warning border-warning/30" },
+            "por_vencer" => new BadgeConfig { Label = "Por vencer", ClassName = "bg-warning/15 text-warning border-warning/30" },
+            "en_curso" => new BadgeConfig { Label = "En curso", ClassName = "bg-accent/15 text-accent border-accent/30" },
+            "programado" => new BadgeConfig { Label = "Programado", ClassName = "bg-accent/15 text-accent border-accent/30" },
+            "vencido" => new BadgeConfig { Label = "Vencido", ClassName = "bg-destructive/15 text-destructive border-destructive/30" },
+            "vencida" => new BadgeConfig { Label = "Vencida", ClassName = "bg-destructive/15 text-destructive border-destructive/30" },
+            "resuelta" => new BadgeConfig { Label = "Resuelta", ClassName = "bg-muted text-muted-foreground border-border" },
+            "finalizado" => new BadgeConfig { Label = "Finalizado", ClassName = "bg-muted text-muted-foreground border-border" },
+            _ => new BadgeConfig { Label = Status, ClassName = "" }
+        };
+    }
+}

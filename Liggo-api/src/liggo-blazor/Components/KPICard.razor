@@ -1,0 +1,25 @@
+<div class="rounded-2xl border-none bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+    <div class="flex items-center gap-5 p-6">
+        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-slate-50 @Color">
+            @Icon
+        </div>
+        <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400">@Title</p>
+            <p class="text-3xl font-black text-[#0A1F44]">@Value</p>
+            @if (!string.IsNullOrEmpty(Trend))
+            {
+                <p class="mt-1 flex items-center gap-1 text-xs font-bold text-[#0B6623]">
+                    @Trend
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public string Trend { get; set; } = "";
+    [Parameter] public string Color { get; set; } = "text-[#0B6623]";
+    [Parameter] public RenderFragment? Icon { get; set; }
+}

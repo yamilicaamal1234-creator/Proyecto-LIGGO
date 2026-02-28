@@ -1,0 +1,114 @@
+@page "/payments"
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<div class="space-y-8">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-black text-[#0A1F44]">Pagos</h1>
+            <p class="text-slate-500 font-medium">Control financiero y registro de transacciones.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="bg-white hover:bg-slate-50 text-[#0A1F44] px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm border border-slate-100 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                Exportar
+            </button>
+            <button class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nuevo Pago
+            </button>
+        </div>
+    </div>
+
+    @* Estadísticas Rápidas *@
+    <div class="grid gap-6 sm:grid-cols-3">
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-50">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Recaudado (Feb)</p>
+            <p class="text-2xl font-black text-[#0A1F44] mt-1">$12,450.00</p>
+        </div>
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-50">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pendientes</p>
+            <p class="text-2xl font-black text-amber-500 mt-1">14 Pagos</p>
+        </div>
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-50">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Vencidos</p>
+            <p class="text-2xl font-black text-red-500 mt-1">3 Pagos</p>
+        </div>
+    </div>
+
+    @* Tabla de Pagos *@
+    <div class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-slate-50 overflow-hidden">
+        <div class="p-6 border-b border-slate-50 flex items-center justify-between">
+            <h3 class="text-lg font-bold text-[#0A1F44]">Historial de Transacciones</h3>
+            <div class="relative w-64">
+                <input placeholder="Buscar jugador..." class="w-full bg-slate-50 border border-slate-100 px-10 py-2 rounded-xl text-sm focus:border-[#0B6623] transition-all outline-none" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-2.5 text-slate-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50/50 text-slate-400 text-xs font-bold uppercase tracking-widest">
+                    <tr>
+                        <th class="px-6 py-4">Fecha</th>
+                        <th class="px-6 py-4">Jugador</th>
+                        <th class="px-6 py-4">Concepto</th>
+                        <th class="px-6 py-4">Monto</th>
+                        <th class="px-6 py-4">Estado</th>
+                        <th class="px-6 py-4">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @foreach (var p in MockPayments)
+                    {
+                        <tr class="hover:bg-slate-50/50 transition-colors">
+                            <td class="px-6 py-5 text-sm font-medium text-slate-500">@p.Date</td>
+                            <td class="px-6 py-5">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-8 w-8 rounded-full bg-[#0A1F44]/5 flex items-center justify-center font-bold text-[#0A1F44] text-[10px]">
+                                        @p.PlayerName.Substring(0, 2).ToUpper()
+                                    </div>
+                                    <span class="text-sm font-bold text-[#0A1F44]">@p.PlayerName</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-5 text-sm font-medium text-slate-500">@p.Concept</td>
+                            <td class="px-6 py-5 text-sm font-black text-[#0A1F44]">$@p.Amount</td>
+                            <td class="px-6 py-5">
+                                <StatusBadge Status="@p.Status" />
+                            </td>
+                            <td class="px-6 py-5">
+                                <button class="text-[#0B6623] hover:text-[#0A1F44] font-bold text-xs uppercase transition-colors">
+                                    Ver Recibo
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<PaymentModel> MockPayments = new()
+    {
+        new PaymentModel { Date = "2026-02-18", PlayerName = "Santiago Martínez", Concept = "Cuota mensual", Amount = 1500, Status = "pagado" },
+        new PaymentModel { Date = "2026-02-15", PlayerName = "Mateo López", Concept = "Inscripción", Amount = 2500, Status = "pendiente" },
+        new PaymentModel { Date = "2026-02-10", PlayerName = "Valentina García", Concept = "Cuota mensual", Amount = 1500, Status = "pagado" },
+        new PaymentModel { Date = "2026-02-05", PlayerName = "Sebastián Hernández", Concept = "Cuota mensual", Amount = 1200, Status = "vencido" }
+    };
+
+    public class PaymentModel
+    {
+        public string Date { get; set; } = "";
+        public string PlayerName { get; set; } = "";
+        public string Concept { get; set; } = "";
+        public int Amount { get; set; }
+        public string Status { get; set; } = "";
+    }
+
+    protected override void OnInitialized()
+    {
+        if (!Auth.IsAuthenticated) Nav.NavigateTo("/login");
+    }
+}

@@ -1,0 +1,75 @@
+@page "/profile"
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<div class="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div>
+        <h1 class="text-3xl font-black text-[#0A1F44]">Mi Perfil</h1>
+        <p class="text-slate-500 font-medium">Configura tu información personal y preferencias.</p>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-3">
+        @* Tarjeta lateral de Perfil *@
+        <div class="md:col-span-1 space-y-6">
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-50 text-center relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-[#0A1F44]/5 to-transparent opacity-50"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="relative mb-6">
+                        <img src="@(Auth.CurrentUser?.Avatar ?? "https://github.com/shadcn.png")" class="h-28 w-28 rounded-full border-4 border-white shadow-xl group-hover:scale-105 transition-transform" />
+                        <button class="absolute bottom-1 right-1 h-8 w-8 rounded-full bg-[#0B6623] text-white flex items-center justify-center border-2 border-white shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </button>
+                    </div>
+                    <h2 class="text-xl font-black text-[#0A1F44]">@(Auth.CurrentUser?.Name ?? "Usuario")</h2>
+                    <p class="text-xs font-bold text-[#0B6623] uppercase tracking-widest mt-1">@(Auth.CurrentUser?.Role ?? "admin")</p>
+                    <p class="text-xs font-medium text-slate-400 mt-2">Miembro desde: Feb 2026</p>
+                </div>
+            </div>
+
+            <div class="bg-[#0A1F44] p-6 rounded-[2rem] shadow-xl text-white">
+                <p class="text-xs font-bold uppercase tracking-widest text-[#FFD700] mb-4 text-center">Plan Académico</p>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-medium text-slate-400">Estado</span>
+                    <span class="text-xs font-black text-white">ACTIVO</span>
+                </div>
+                <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                    <div class="bg-[#0B6623] h-full w-4/5"></div>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-2 text-center">Próxima renovación: 15 Dic 2026</p>
+            </div>
+        </div>
+
+        @* Formulario de Configuración *@
+        <div class="md:col-span-2 space-y-6">
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-50">
+                <h3 class="text-lg font-bold text-[#0A1F44] mb-6">Configuración Personal</h3>
+                <div class="grid gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Nombre Completo</label>
+                        <input type="text" value="@Auth.CurrentUser?.Name" class="w-full h-12 px-4 rounded-xl border border-slate-100 bg-slate-50 font-medium text-[#0A1F44] focus:border-[#0B6623] transition-all outline-none" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Correo Electrónico</label>
+                        <input type="email" value="mili@liggo.com" class="w-full h-12 px-4 rounded-xl border border-slate-100 bg-slate-50 font-medium text-[#0A1F44] focus:border-[#0B6623] transition-all outline-none" />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-widest">Biografía</label>
+                        <textarea class="w-full h-32 px-4 py-3 rounded-xl border border-slate-100 bg-slate-50 font-medium text-[#0A1F44] focus:border-[#0B6623] transition-all outline-none resize-none">Gestión y administración deportiva enfocada en academias juveniles.</textarea>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end">
+                    <button class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        if (!Auth.IsAuthenticated) Nav.NavigateTo("/login");
+    }
+}

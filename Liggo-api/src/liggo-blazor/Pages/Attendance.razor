@@ -1,0 +1,118 @@
+@page "/attendance"
+@page "/attendance/{MatchId}"
+@inject AuthService Auth
+@inject NavigationManager Nav
+
+<div class="space-y-6">
+    <button @onclick="GoBack" class="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-[#0A1F44] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Volver
+    </button>
+
+    @* Scoreboard *@
+    <div class="rounded-xl bg-white shadow-sm border border-slate-100">
+        <div class="flex items-center justify-center gap-8 py-8">
+            <div class="text-center">
+                <p class="text-lg font-bold text-[#0A1F44]">@currentMatch?.HomeTeam</p>
+            </div>
+            <div class="text-center">
+                <p class="text-4xl font-bold text-[#0A1F44]">@(currentMatch?.HomeScore ?? 0) - @(currentMatch?.AwayScore ?? 0)</p>
+                <p class="text-xs text-muted-foreground">@currentMatch?.Category · @currentMatch?.Date</p>
+            </div>
+            <div class="text-center">
+                <p class="text-lg font-bold text-[#0A1F44]">@currentMatch?.AwayTeam</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="rounded-xl bg-white shadow-sm border border-slate-100">
+        <div class="p-6 border-b border-slate-100">
+            <h3 class="text-lg font-bold text-[#0A1F44]">Control de Asistencia</h3>
+        </div>
+        <div class="p-6 space-y-2">
+            @foreach (var p in matchPlayers)
+            {
+                var status = attendance[p.Id];
+                var config = GetStatusConfig(status);
+                <div class="flex items-center justify-between rounded-lg border border-slate-100 p-3">
+                    <div class="flex items-center gap-3">
+                        <img src="@p.Avatar" class="h-8 w-8 rounded-full" alt="Avatar" />
+                        <div>
+                            <p class="text-sm font-medium text-[#0A1F44]">#@p.Number @p.Name</p>
+                            <p class="text-xs text-slate-400">@p.Team</p>
+                        </div>
+                    </div>
+                    <button @onclick="() => ToggleAttendance(p.Id)"
+                        class="flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors @config.ClassName">
+                        @((MarkupString)config.Icon)
+                        @config.Label
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? MatchId { get; set; }
+    private Match? currentMatch;
+    private List<Player> matchPlayers = new();
+    private Dictionary<string, string> attendance = new();
+
+    protected override void OnInitialized()
+    {
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/login");
+            return;
+        }
+
+        currentMatch = MockData.Matches.FirstOrDefault(m => m.Id == MatchId) ?? MockData.Matches[0];
+        
+        matchPlayers = MockData.Players
+            .Where(p => p.Team == currentMatch.HomeTeam || p.Team == currentMatch.AwayTeam)
+            .ToList();
+
+        foreach (var p in matchPlayers)
+        {
+            attendance[p.Id] = "sin_registrar";
+        }
+    }
+
+    private void ToggleAttendance(string playerId)
+    {
+        var currentStatus = attendance[playerId];
+        attendance[playerId] = currentStatus switch
+        {
+            "sin_registrar" => "presente",
+            "presente" => "ausente",
+            _ => "sin_registrar"
+        };
+    }
+
+    private void GoBack() => Nav.NavigateTo("/dashboard");
+
+    private class StatusConfig { public string Label { get; set; } = ""; public string ClassName { get; set; } = ""; public string Icon { get; set; } = ""; }
+
+    private StatusConfig GetStatusConfig(string status)
+    {
+        return status switch
+        {
+            "presente" => new StatusConfig { 
+                Label = "Presente", 
+                ClassName = "bg-primary/15 text-primary border-primary/30",
+                Icon = "<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>"
+            },
+            "ausente" => new StatusConfig { 
+                Label = "Ausente", 
+                ClassName = "bg-destructive/15 text-destructive border-destructive/30",
+                Icon = "<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>"
+            },
+            _ => new StatusConfig { 
+                Label = "Sin registrar", 
+                ClassName = "bg-muted text-muted-foreground border-border",
+                Icon = "<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='5' y1='12' x2='19' y2='12'/></svg>"
+            }
+        };
+    }
+}

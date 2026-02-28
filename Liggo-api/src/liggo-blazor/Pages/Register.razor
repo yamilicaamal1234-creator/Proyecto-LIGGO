@@ -1,0 +1,127 @@
+@page "/register"
+@using liggo_blazor.Models
+@using liggo_blazor.Services
+@inject AuthService AuthService
+@inject NavigationManager Navigation
+
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#0A1F44] to-[#0B6623] px-4 font-sans">
+    <div class="w-full max-w-md border-none bg-white p-8 shadow-2xl rounded-2xl">
+        <div class="flex flex-col items-center pb-6">
+            <h1 class="text-4xl font-extrabold tracking-tight text-[#0A1F44] mb-1">LIGGO</h1>
+            <p class="text-sm font-medium text-slate-500">Crea tu cuenta deportiva real</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+                @errorMessage
+            </div>
+        }
+
+        <div class="space-y-5">
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold uppercase tracking-wider text-[#0A1F44]">Nombre completo</label>
+                <input @bind="fullName" placeholder="Tu nombre" 
+                       class="h-12 w-full px-4 border border-slate-200 bg-slate-50 rounded-xl outline-none focus:border-[#0B6623] focus:ring-2 focus:ring-[#0B6623]/20 transition-all" />
+            </div>
+
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold uppercase tracking-wider text-[#0A1F44]">Nombre de tu Escuela/Club</label>
+                <input @bind="schoolName" placeholder="Ej: Rayados Monterrey" 
+                       class="h-12 w-full px-4 border border-slate-200 bg-slate-50 rounded-xl outline-none focus:border-[#0B6623] focus:ring-2 focus:ring-[#0B6623]/20 transition-all" />
+            </div>
+            
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold uppercase tracking-wider text-[#0A1F44]">Correo electrónico</label>
+                <input @bind="email" type="email" placeholder="correo@ejemplo.com" 
+                       class="h-12 w-full px-4 border border-slate-200 bg-slate-50 rounded-xl outline-none focus:border-[#0B6623] focus:ring-2 focus:ring-[#0B6623]/20 transition-all" />
+            </div>
+            
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold uppercase tracking-wider text-[#0A1F44]">Contraseña</label>
+                <input @bind="password" type="password" placeholder="••••••••" 
+                       class="h-12 w-full px-4 border border-slate-200 bg-slate-50 rounded-xl outline-none focus:border-[#0B6623] focus:ring-2 focus:ring-[#0B6623]/20 transition-all" />
+            </div>
+
+            <button @onclick="HandleRegister" disabled="@isLoading"
+                    class="w-full bg-[#0B6623] hover:bg-[#0A1F44] text-white rounded-xl h-12 font-bold transition-all hover:shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed mt-2">
+                @if (isLoading)
+                {
+                    <span class="inline-block animate-spin mr-2">↻</span>
+                    <span>Procesando...</span>
+                }
+                else
+                {
+                    <span>Registrarse Ahora</span>
+                }
+            </button>
+
+            <div class="text-center pt-4 border-t border-slate-100 mt-6">
+                <p class="text-xs text-slate-400 mb-2">¿Ya tienes cuenta?</p>
+                <a href="/login" class="text-sm font-bold text-[#0B6623] hover:text-[#0A1F44] transition-colors underline decoration-2 underline-offset-4">
+                    Inicia sesión aquí
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string fullName = "";
+    private string schoolName = "";
+    private string email = "";
+    private string password = "";
+    private string errorMessage = "";
+    private bool isLoading = false;
+
+    private async Task HandleRegister()
+    {
+        if (string.IsNullOrWhiteSpace(fullName) || string.IsNullOrWhiteSpace(schoolName) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            errorMessage = "Por favor completa todos los campos.";
+            return;
+        }
+
+        errorMessage = "";
+        isLoading = true;
+
+        try
+        {
+            var tempUid = Guid.NewGuid().ToString();
+
+            var request = new RegisterRequest
+            {
+                Id = tempUid,
+                ActiveTenantId = schoolName,
+                Auth = new AuthDataDto { 
+                    Email = email,
+                    Provider = "email"
+                },
+                GlobalProfile = new GlobalProfileDto { 
+                    FullName = fullName 
+                },
+                CreatedAt = DateTime.UtcNow
+            };
+
+            var success = await AuthService.RegisterAsync(request);
+
+            if (success)
+            {
+                // Redirigimos al Dashboard o a Clientes tras el éxito
+                Navigation.NavigateTo("/customers");
+            }
+            else
+            {
+                errorMessage = "Hubo un error al conectar con la API de Firestore. Verifica que tu FirebaseKey.json sea válido.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ocurrió un error inesperado: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

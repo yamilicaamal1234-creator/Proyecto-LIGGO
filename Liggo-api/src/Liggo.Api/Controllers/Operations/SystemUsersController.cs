@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Liggo.Application.UseCases.Operations.SystemUsers.Commands.CreateSystemUser;
 using Liggo.Application.UseCases.Operations.SystemUsers.Queries.GetSystemUserById;
+using Liggo.Application.UseCases.Operations.SystemUsers.Queries.GetSystemUserByEmail;
 
 namespace Liggo.Api.Controllers.Operations;
 
@@ -32,6 +33,18 @@ public class SystemUsersController : ControllerBase
 
         if (user == null)
             return NotFound(new { message = $"No se encontró el usuario del sistema con ID {id}" });
+
+        return Ok(user);
+    }
+
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetByEmail(string email)
+    {
+        var query = new GetSystemUserByEmailQuery(email);
+        var user = await _sender.Send(query);
+
+        if (user == null)
+            return NotFound(new { message = $"No se encontró el usuario con email {email}" });
 
         return Ok(user);
     }
