@@ -1,33 +1,40 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj": {}
+    "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj": {}
   },
   "projects": {
-    "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj": {
+    "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj",
         "projectName": "Liggo.Application",
-        "projectPath": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj",
-        "packagesPath": "C:\\Users\\Natsu\\.nuget\\packages\\",
-        "outputPath": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\obj\\",
+        "projectPath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj",
+        "packagesPath": "C:\\Users\\Mili\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Natsu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Mili\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj": {
-                "projectPath": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj"
+              "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj": {
+                "projectPath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj"
               }
             }
           }
@@ -42,7 +49,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -68,31 +75,52 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.12, 9.0.12]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.12, 9.0.12]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[9.0.12, 9.0.12]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj": {
+    "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj",
         "projectName": "Liggo.Domain",
-        "projectPath": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj",
-        "packagesPath": "C:\\Users\\Natsu\\.nuget\\packages\\",
-        "outputPath": "D:\\Arquitectura\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\Liggo.Domain.csproj",
+        "packagesPath": "C:\\Users\\Mili\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Natsu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Mili\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -111,7 +139,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -127,12 +155,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.12, 9.0.12]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.12, 9.0.12]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[9.0.12, 9.0.12]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

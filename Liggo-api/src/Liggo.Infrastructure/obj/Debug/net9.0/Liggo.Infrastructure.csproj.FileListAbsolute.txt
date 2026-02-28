@@ -18,3 +18,23 @@ D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.pdb
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.genruntimeconfig.cache
 D:\Arquitectura\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\ref\Liggo.Infrastructure.dll
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Infrastructure.deps.json
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Infrastructure.runtimeconfig.json
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Infrastructure.dll
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Infrastructure.pdb
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Application.dll
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Domain.dll
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Application.pdb
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\bin\Debug\net9.0\Liggo.Domain.pdb
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.AssemblyInfo.cs
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.sourcelink.json
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.In.0DC843A8.Up2Date
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.dll
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\refint\Liggo.Infrastructure.dll
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.pdb
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\Liggo.Infrastructure.genruntimeconfig.cache
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\Liggo.Infrastructure\obj\Debug\net9.0\ref\Liggo.Infrastructure.dll

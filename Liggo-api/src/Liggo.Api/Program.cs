@@ -1,5 +1,7 @@
 using Liggo.Application;
+using Liggo.Application.Interfaces;
 using Liggo.Infrastructure;
+using Liggo.Infrastructure.Services;
 using Liggo.Api.Middlewares;
 using System.IO;
 
@@ -16,6 +18,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// REGISTRO DE FIRESTORE (Clean Architecture)
+builder.Services.AddSingleton<FirestoreService>();
+builder.Services.AddSingleton<IFirestoreTenantRepository>(sp => sp.GetRequiredService<FirestoreService>());
 
 // IMPORTANTE: Configurar CORS por si conectas un Frontend en React/Angular/Vue
 builder.Services.AddCors(options =>
