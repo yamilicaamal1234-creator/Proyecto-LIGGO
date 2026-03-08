@@ -20,51 +20,51 @@ public class LedgerTransactionRepository : ILedgerTransactionRepository
         _db = firestoreProvider.GetDb();
     }
 
-    public async Task<LedgerTransaction?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<LedgerTransaction?> GetByIdAsync(Guid id, Guid adminId)
     {
-        var snapshot = await _db.Collection(CollectionName).Document(id).GetSnapshotAsync(cancellationToken);
+        var snapshot = await _db.Collection(CollectionName).Document(id.ToString()).GetSnapshotAsync();
         if (!snapshot.Exists) return null;
 
         var doc = snapshot.ConvertTo<LedgerTransactionDocument>();
         return MapToDomain(doc, snapshot.Id);
     }
 
-    public async Task<IEnumerable<LedgerTransaction>> GetAllBySchoolIdAsync(string schoolId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<LedgerTransaction>> GetAllBySchoolIdAsync(Guid schoolId, Guid adminId)
     {
-        var query = _db.Collection(CollectionName).WhereEqualTo("SchoolId", schoolId);
-        var snapshot = await query.GetSnapshotAsync(cancellationToken);
+        var query = _db.Collection(CollectionName).WhereEqualTo("SchoolId", schoolId.ToString());
+        var snapshot = await query.GetSnapshotAsync();
 
         return snapshot.Documents
             .Select(d => MapToDomain(d.ConvertTo<LedgerTransactionDocument>(), d.Id))
             .ToList();
     }
 
-    public async Task<IEnumerable<LedgerTransaction>> GetAllByMemberIdAsync(string memberId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<LedgerTransaction>> GetAllByMemberIdAsync(Guid memberId, Guid adminId)
     {
-        var query = _db.Collection(CollectionName).WhereEqualTo("MemberId", memberId);
-        var snapshot = await query.GetSnapshotAsync(cancellationToken);
+        var query = _db.Collection(CollectionName).WhereEqualTo("MemberId", memberId.ToString());
+        var snapshot = await query.GetSnapshotAsync();
 
         return snapshot.Documents
             .Select(d => MapToDomain(d.ConvertTo<LedgerTransactionDocument>(), d.Id))
             .ToList();
     }
 
-    public async Task AddAsync(LedgerTransaction transaction, CancellationToken cancellationToken = default)
+    public async Task AddAsync(LedgerTransaction transaction)
     {
         var doc = MapToDocument(transaction);
-        await _db.Collection(CollectionName).Document(transaction.Id).SetAsync(doc, cancellationToken: cancellationToken);
+        await _db.Collection(CollectionName).Document(transaction.Id.ToString()).SetAsync(doc);
     }
 
-    public async Task UpdateAsync(LedgerTransaction transaction, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(LedgerTransaction transaction)
     {
         var doc = MapToDocument(transaction);
         // MergeAll para conservar los campos SchoolId y MemberId que no existen en el Dominio puro
-        await _db.Collection(CollectionName).Document(transaction.Id).SetAsync(doc, SetOptions.MergeAll, cancellationToken);
+        await _db.Collection(CollectionName).Document(transaction.Id.ToString()).SetAsync(doc, SetOptions.MergeAll);
     }
 
-    public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, Guid adminId)
     {
-        await _db.Collection(CollectionName).Document(id).DeleteAsync(cancellationToken: cancellationToken);
+        await _db.Collection(CollectionName).Document(id.ToString()).DeleteAsync();
     }
 
     // ==========================================
@@ -75,7 +75,7 @@ public class LedgerTransactionRepository : ILedgerTransactionRepository
     {
         return new LedgerTransaction
         {
-            Id = realId,
+            Id = Guid.Parse(realId),
             Type = doc.Type ?? string.Empty,
             // Convertimos de double (Firestore) a decimal (C#)
             Amount = Convert.ToDecimal(doc.Amount),

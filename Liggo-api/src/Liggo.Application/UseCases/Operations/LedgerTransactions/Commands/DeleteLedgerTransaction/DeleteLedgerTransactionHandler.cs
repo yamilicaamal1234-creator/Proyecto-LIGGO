@@ -16,10 +16,10 @@ public class DeleteLedgerTransactionHandler : IRequestHandler<DeleteLedgerTransa
 
     public async Task<bool> Handle(DeleteLedgerTransactionCommand request, CancellationToken cancellationToken)
     {
-        var transaction = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var transaction = await _repository.GetByIdAsync(Guid.Parse(request.Id), Guid.Empty);
         if (transaction == null) return false;
 
-        await _repository.DeleteAsync(request.Id, cancellationToken);
+        await _repository.DeleteAsync(Guid.Parse(request.Id), Guid.Empty);
         return true;
     }
 }

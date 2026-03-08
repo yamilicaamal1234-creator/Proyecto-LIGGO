@@ -20,13 +20,13 @@ public class GetAllLedgerTransactionsByMemberIdHandler : IRequestHandler<GetAllL
 
     public async Task<IEnumerable<LedgerTransactionResponse>> Handle(GetAllLedgerTransactionsByMemberIdQuery request, CancellationToken cancellationToken)
     {
-        var transactions = await _repository.GetAllByMemberIdAsync(request.MemberId, cancellationToken);
+        var transactions = await _repository.GetAllByMemberIdAsync(Guid.Parse(request.MemberId), Guid.Empty);
         
         if (transactions == null || !transactions.Any())
             return Enumerable.Empty<LedgerTransactionResponse>();
             
         return transactions.Select(t => new LedgerTransactionResponse(
-            t.Id, 
+            t.Id.ToString(), 
             t.Type, 
             t.Amount, 
             t.Concept, 

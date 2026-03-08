@@ -19,7 +19,7 @@ public class CreateLedgerTransactionHandler : IRequestHandler<CreateLedgerTransa
     {
         var transaction = new LedgerTransaction
         {
-            Id = Guid.NewGuid().ToString(), // ID para Firebase
+            Id = Guid.NewGuid(), // ID para Firebase
             Type = request.Type,
             Amount = request.Amount,
             Concept = request.Type == "charge" ? request.Concept : string.Empty,
@@ -33,8 +33,8 @@ public class CreateLedgerTransactionHandler : IRequestHandler<CreateLedgerTransa
             }
         };
 
-        await _repository.AddAsync(transaction, cancellationToken);
+        await _repository.AddAsync(transaction);
 
-        return transaction.Id;
+        return transaction.Id.ToString();
     }
 }

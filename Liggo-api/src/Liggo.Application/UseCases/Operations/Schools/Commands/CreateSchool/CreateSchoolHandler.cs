@@ -20,7 +20,7 @@ public class CreateSchoolHandler : IRequestHandler<CreateSchoolCommand, string>
     {
         var school = new School
         {
-            Id = request.Id, // Usamos el ID exacto que nos pasan
+            Id = Guid.Parse(request.Id), // Usamos el ID exacto que nos pasan
             Info = new SchoolInfo
             {
                 Name = request.Info.Name,
@@ -39,8 +39,8 @@ public class CreateSchoolHandler : IRequestHandler<CreateSchoolCommand, string>
             }
         };
 
-        await _schoolRepository.AddAsync(school, cancellationToken);
+        await _schoolRepository.AddAsync(school);
 
-        return school.Id;
+        return school.Id.ToString();
     }
 }

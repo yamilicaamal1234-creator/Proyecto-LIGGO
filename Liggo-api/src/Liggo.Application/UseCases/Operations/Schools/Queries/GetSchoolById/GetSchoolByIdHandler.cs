@@ -19,11 +19,11 @@ public class GetSchoolByIdHandler : IRequestHandler<GetSchoolByIdQuery, SchoolRe
 
     public async Task<SchoolResponse?> Handle(GetSchoolByIdQuery request, CancellationToken cancellationToken)
     {
-        var school = await _schoolRepository.GetByIdAsync(request.Id, cancellationToken);
+        var school = await _schoolRepository.GetByIdAsync(Guid.Parse(request.Id), Guid.Empty);
         if (school == null) return null;
 
         return new SchoolResponse(
-            school.Id,
+            school.Id.ToString(),
             new SchoolInfoDto(school.Info.Name, school.Info.Plan, school.Info.LogoUrl),
             new SchoolSettingsDto(
                 school.Settings.Currency, 

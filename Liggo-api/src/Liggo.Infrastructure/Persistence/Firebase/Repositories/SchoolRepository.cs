@@ -19,10 +19,10 @@ public class SchoolRepository : ISchoolRepository
         _db = firestoreProvider.GetDb();
     }
 
-    public async Task<School?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<School?> GetByIdAsync(Guid id, Guid adminId)
     {
-        var docRef = _db.Collection(CollectionName).Document(id);
-        var snapshot = await docRef.GetSnapshotAsync(cancellationToken);
+        var docRef = _db.Collection(CollectionName).Document(id.ToString());
+        var snapshot = await docRef.GetSnapshotAsync();
 
         if (!snapshot.Exists) return null;
 
@@ -37,7 +37,7 @@ public class SchoolRepository : ISchoolRepository
 
         return new School
         {
-            Id = snapshot.Id,
+            Id = Guid.Parse(snapshot.Id),
             Info = new SchoolInfo
             {
                 Name = info.ContainsKey("Name") ? info["Name"].ToString() ?? "" : "",
@@ -62,18 +62,18 @@ public class SchoolRepository : ISchoolRepository
         };
     }
 
-    public async Task<IEnumerable<School>> GetAllByTenantIdAsync(string tenantId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<School>> GetAllByAdminIdAsync(Guid adminId)
     {
         // Consulta a Firebase filtrando por TenantId
-        var query = _db.Collection(CollectionName).WhereEqualTo("TenantId", tenantId);
-        var snapshot = await query.GetSnapshotAsync(cancellationToken);
+        var query = _db.Collection(CollectionName).WhereEqualTo("TenantId", adminId.ToString());
+        var snapshot = await query.GetSnapshotAsync();
 
         return snapshot.Documents.Select(d => 
         {
             var doc = d.ConvertTo<SchoolDocument>();
             return new School
             {
-                Id = d.Id,
+                Id = Guid.Parse(d.Id),
                 Info = new SchoolInfo
                 {
                     Name = doc.Info?.Name ?? string.Empty,
@@ -94,27 +94,27 @@ public class SchoolRepository : ISchoolRepository
         }).ToList();
     }
 
-    public async Task AddAsync(School school, CancellationToken cancellationToken = default)
+    public async Task AddAsync(School school)
     {
         // Mapeamos nuestra entidad de dominio a un Diccionario para Firestore
         var docData = MapToDictionary(school);
         
-        var docRef = _db.Collection(CollectionName).Document(school.Id);
-        await docRef.SetAsync(docData, cancellationToken: cancellationToken);
+        var docRef = _db.Collection(CollectionName).Document(school.Id.ToString());
+        await docRef.SetAsync(docData);
     }
 
-    public async Task UpdateAsync(School school, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(School school)
     {
         var docData = MapToDictionary(school);
         
-        var docRef = _db.Collection(CollectionName).Document(school.Id);
-        await docRef.SetAsync(docData, SetOptions.MergeAll, cancellationToken); // MergeAll actualiza sin borrar campos extra
+        var docRef = _db.Collection(CollectionName).Document(school.Id.ToString());
+        await docRef.SetAsync(docData, SetOptions.MergeAll); // MergeAll actualiza sin borrar campos extra
     }
 
-    public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, Guid adminId)
     {
-        var docRef = _db.Collection(CollectionName).Document(id);
-        await docRef.DeleteAsync(cancellationToken: cancellationToken);
+        var docRef = _db.Collection(CollectionName).Document(id.ToString());
+        await docRef.DeleteAsync();
     }
 
     // Método Helper privado para convertir la entidad en un Diccionario compatible con Firestore

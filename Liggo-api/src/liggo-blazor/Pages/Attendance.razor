@@ -1,118 +1,132 @@
 @page "/attendance"
-@page "/attendance/{MatchId}"
-@inject AuthService Auth
 @inject NavigationManager Nav
+@inject AttendanceService AttendanceSvc
+@inject PlayerService PlayerSvc
+@using liggo_blazor.Models
 
-<div class="space-y-6">
-    <button @onclick="GoBack" class="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-[#0A1F44] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Volver
-    </button>
-
-    @* Scoreboard *@
+<div class="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
     <div class="rounded-xl bg-white shadow-sm border border-slate-100">
-        <div class="flex items-center justify-center gap-8 py-8">
-            <div class="text-center">
-                <p class="text-lg font-bold text-[#0A1F44]">@currentMatch?.HomeTeam</p>
+        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+            <div>
+                <h3 class="text-xl font-black text-[#0A1F44]">Control General de Asistencia</h3>
+                <p class="text-sm font-medium text-slate-500">Pase de lista de todos los jugadores de la academia</p>
             </div>
-            <div class="text-center">
-                <p class="text-4xl font-bold text-[#0A1F44]">@(currentMatch?.HomeScore ?? 0) - @(currentMatch?.AwayScore ?? 0)</p>
-                <p class="text-xs text-muted-foreground">@currentMatch?.Category · @currentMatch?.Date</p>
-            </div>
-            <div class="text-center">
-                <p class="text-lg font-bold text-[#0A1F44]">@currentMatch?.AwayTeam</p>
-            </div>
+            <button @onclick="HandleSaveAttendance" class="px-6 py-3 rounded-xl bg-[#0B6623] text-white font-bold hover:bg-[#0A1F44] transition-colors shadow-lg shadow-[#0B6623]/20">Guardar Asistencia</button>
         </div>
-    </div>
-
-    <div class="rounded-xl bg-white shadow-sm border border-slate-100">
-        <div class="p-6 border-b border-slate-100">
-            <h3 class="text-lg font-bold text-[#0A1F44]">Control de Asistencia</h3>
-        </div>
-        <div class="p-6 space-y-2">
-            @foreach (var p in matchPlayers)
+        <div class="p-6 space-y-3">
+            @if(attendanceViewModels == null)
             {
-                var status = attendance[p.Id];
-                var config = GetStatusConfig(status);
-                <div class="flex items-center justify-between rounded-lg border border-slate-100 p-3">
-                    <div class="flex items-center gap-3">
-                        <img src="@p.Avatar" class="h-8 w-8 rounded-full" alt="Avatar" />
-                        <div>
-                            <p class="text-sm font-medium text-[#0A1F44]">#@p.Number @p.Name</p>
-                            <p class="text-xs text-slate-400">@p.Team</p>
+                <div class="flex items-center justify-center py-10">
+                    <p class="text-slate-500 font-medium">Cargando jugadores...</p>
+                </div>
+            }
+            else
+            {
+                @foreach (var attendance in attendanceViewModels)
+                {
+                    <div class="flex items-center justify-between rounded-2xl border border-slate-100 p-4 hover:border-slate-200 transition-colors shadow-sm bg-slate-50/30">
+                        <div class="flex items-center gap-4">
+                            <div class="h-10 w-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-500 uppercase">
+                                @(attendance.PlayerName.Length > 0 ? attendance.PlayerName.Substring(0,1) : "P")
+                            </div>
+                            <p class="text-base font-bold text-[#0A1F44]">@attendance.PlayerName</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button @onclick="() => CycleStatus(attendance)" 
+                                    style="background-color: @GetStatusHex(attendance.Status); color: @GetStatusTextColor(attendance.Status); border-color: rgba(0,0,0,0.1);"
+                                    class="px-5 py-2 text-base font-bold rounded-xl transition-all min-w-[140px] shadow-sm active:scale-95 border-2 flex items-center justify-center">
+                                @GetStatusLabel(attendance.Status)
+                            </button>
                         </div>
                     </div>
-                    <button @onclick="() => ToggleAttendance(p.Id)"
-                        class="flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors @config.ClassName">
-                        @((MarkupString)config.Icon)
-                        @config.Label
-                    </button>
-                </div>
+                }
             }
         </div>
     </div>
 </div>
 
 @code {
-    [Parameter] public string? MatchId { get; set; }
-    private Match? currentMatch;
-    private List<Player> matchPlayers = new();
-    private Dictionary<string, string> attendance = new();
+    private List<AttendanceViewModel>? attendanceViewModels;
 
-    protected override void OnInitialized()
+    public class AttendanceViewModel
     {
-        if (!Auth.IsAuthenticated)
-        {
-            Nav.NavigateTo("/login");
-            return;
-        }
-
-        currentMatch = MockData.Matches.FirstOrDefault(m => m.Id == MatchId) ?? MockData.Matches[0];
-        
-        matchPlayers = MockData.Players
-            .Where(p => p.Team == currentMatch.HomeTeam || p.Team == currentMatch.AwayTeam)
-            .ToList();
-
-        foreach (var p in matchPlayers)
-        {
-            attendance[p.Id] = "sin_registrar";
-        }
+        public Guid PlayerId { get; set; }
+        public string PlayerName { get; set; } = string.Empty;
+        public AttendanceStatus Status { get; set; }
     }
 
-    private void ToggleAttendance(string playerId)
+    protected override async Task OnInitializedAsync()
     {
-        var currentStatus = attendance[playerId];
-        attendance[playerId] = currentStatus switch
+        var allPlayers = await PlayerSvc.GetPlayersAsync();
+
+        // Control de asistencia general de todos los jugadores
+        attendanceViewModels = allPlayers.Select(p => new AttendanceViewModel
         {
-            "sin_registrar" => "presente",
-            "presente" => "ausente",
-            _ => "sin_registrar"
+            PlayerId = p.Id,
+            PlayerName = p.FullName,
+            Status = AttendanceStatus.Present // Por defecto presentes
+        }).ToList();
+    }
+
+    private async Task HandleSaveAttendance()
+    {
+        if (attendanceViewModels == null) return;
+
+        var request = new SaveAttendanceRequest
+        {
+            MatchId = Guid.Empty, // Sin ID de partido específico
+            Attendances = attendanceViewModels.Select(vm => new AttendanceRecordRequest
+            {
+                PlayerId = vm.PlayerId,
+                Status = vm.Status
+            })
         };
-    }
 
-    private void GoBack() => Nav.NavigateTo("/dashboard");
-
-    private class StatusConfig { public string Label { get; set; } = ""; public string ClassName { get; set; } = ""; public string Icon { get; set; } = ""; }
-
-    private StatusConfig GetStatusConfig(string status)
-    {
-        return status switch
+        try
         {
-            "presente" => new StatusConfig { 
-                Label = "Presente", 
-                ClassName = "bg-primary/15 text-primary border-primary/30",
-                Icon = "<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>"
-            },
-            "ausente" => new StatusConfig { 
-                Label = "Ausente", 
-                ClassName = "bg-destructive/15 text-destructive border-destructive/30",
-                Icon = "<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>"
-            },
-            _ => new StatusConfig { 
-                Label = "Sin registrar", 
-                ClassName = "bg-muted text-muted-foreground border-border",
-                Icon = "<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='5' y1='12' x2='19' y2='12'/></svg>"
-            }
-        };
+            await AttendanceSvc.SaveAttendanceAsync(request);
+            Nav.NavigateTo("/dashboard");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving attendance: {ex.Message}");
+        }
     }
+
+    private void CycleStatus(AttendanceViewModel vm)
+    {
+        vm.Status = vm.Status switch
+        {
+            AttendanceStatus.Present => AttendanceStatus.Tardy,
+            AttendanceStatus.Tardy => AttendanceStatus.Absent,
+            AttendanceStatus.Absent => AttendanceStatus.Justified,
+            AttendanceStatus.Justified => AttendanceStatus.Present,
+            _ => AttendanceStatus.Present
+        };
+        StateHasChanged();
+    }
+
+    private string GetStatusLabel(AttendanceStatus status) => status switch
+    {
+        AttendanceStatus.Present => "PRESENTE",
+        AttendanceStatus.Absent => "AUSENTE",
+        AttendanceStatus.Justified => "JUSTIFICADO",
+        AttendanceStatus.Tardy => "RETARDO",
+        _ => "PRESENTE"
+    };
+
+    private string GetStatusHex(AttendanceStatus status) => status switch
+    {
+        AttendanceStatus.Present => "#22c55e",
+        AttendanceStatus.Absent => "#dc2626",
+        AttendanceStatus.Justified => "#facc15",
+        AttendanceStatus.Tardy => "#f97316",
+        _ => "#cbd5e1"
+    };
+
+    private string GetStatusTextColor(AttendanceStatus status) => status switch
+    {
+        AttendanceStatus.Absent => "#ffffff",
+        _ => "#000000"
+    };
 }

@@ -18,12 +18,12 @@ public class GetMemberByIdHandler : IRequestHandler<GetMemberByIdQuery, MemberRe
 
     public async Task<MemberResponse?> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
     {
-        var member = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var member = await _repository.GetByIdAsync(Guid.Parse(request.Id), cancellationToken);
         
         if (member == null) return null;
 
         return new MemberResponse(
-            member.Id, 
+            member.Id.ToString(), 
             member.Uid,
             new MemberProfileDto(member.Profile.Name, member.Profile.Phone),
             member.Role,

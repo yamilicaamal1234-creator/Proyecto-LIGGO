@@ -14,11 +14,11 @@ public class DeleteIncidentHandler : IRequestHandler<DeleteIncidentCommand, bool
 
     public async Task<bool> Handle(DeleteIncidentCommand request, CancellationToken cancellationToken)
     {
-        var incident = await _incidentRepository.GetByIdAsync(request.Id, cancellationToken);
-        
+        var incident = await _incidentRepository.GetByIdAsync(Guid.Parse(request.Id), Guid.Empty);
+
         if (incident == null) return false;
 
-        await _incidentRepository.DeleteAsync(request.Id, cancellationToken);
+        await _incidentRepository.DeleteAsync(Guid.Parse(request.Id), Guid.Empty);
         return true;
     }
 }

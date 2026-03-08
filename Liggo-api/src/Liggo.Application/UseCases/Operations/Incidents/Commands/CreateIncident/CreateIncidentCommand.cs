@@ -6,8 +6,10 @@ namespace Liggo.Application.UseCases.Operations.Incidents.Commands.CreateInciden
 public record IncidentContextDto(string Student, string Event);
 
 public record CreateIncidentCommand(
+    Guid AdminId,
+    string PlayerId,
     string Type,
     string Severity,
     IncidentContextDto Context,
     string Description,
-    string Status) : IRequest<string>; // Retorna el string ID
+    string Status) : IRequest<Guid>; // Retorna el Guid ID

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("liggo-blazor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a996f9011d07ef02da51507000205da3406c7e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d43e4f2cbdd3275c7263fb60417d35be50e29d90")]
 [assembly: System.Reflection.AssemblyProductAttribute("liggo-blazor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("liggo-blazor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

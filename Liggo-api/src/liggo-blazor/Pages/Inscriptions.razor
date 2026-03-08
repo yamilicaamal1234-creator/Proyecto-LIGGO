@@ -1,6 +1,8 @@
 @page "/inscriptions"
-@inject AuthService Auth
 @inject NavigationManager Nav
+@inject RegistrationService RegSvc
+@inject PlayerService PlayerSvc
+@using liggo_blazor.Models
 
 <div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
     <div class="flex items-center justify-between">
@@ -8,13 +10,12 @@
             <h1 class="text-3xl font-black text-[#0A1F44]">Inscripciones</h1>
             <p class="text-slate-500 font-medium">Gestión de membresías y planes activos.</p>
         </div>
-        <button class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
+        <button @onclick="ShowCreateModal" class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
             Nueva Inscripción
         </button>
     </div>
 
-    @* Listado de Inscripciones *@
     <div class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-slate-50 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left">
@@ -25,35 +26,29 @@
                         <th class="px-6 py-4">Vigencia</th>
                         <th class="px-6 py-4">Monto</th>
                         <th class="px-6 py-4">Estado</th>
-                        <th class="px-6 py-4">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50">
-                    @foreach (var ins in MockInscriptions)
+                <tbody>
+                    @if (registrations == null)
                     {
-                        <tr class="hover:bg-slate-50/50 transition-colors">
-                            <td class="px-6 py-5">
-                                <span class="text-sm font-bold text-[#0A1F44]">@ins.PlayerName</span>
-                            </td>
-                            <td class="px-6 py-5">
-                                <span class="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-600 uppercase">@ins.Plan</span>
-                            </td>
-                            <td class="px-6 py-5">
-                                <div class="text-xs font-medium text-slate-500">
-                                    <p>Desde: @ins.StartDate</p>
-                                    <p>Hasta: @ins.EndDate</p>
-                                </div>
-                            </td>
-                            <td class="px-6 py-5 text-sm font-black text-[#0A1F44]">$@ins.Amount</td>
-                            <td class="px-6 py-5">
-                                <StatusBadge Status="@ins.Status" />
-                            </td>
-                            <td class="px-6 py-5">
-                                <button class="p-2 bg-slate-50 hover:bg-slate-100 rounded-xl transition-all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-[#0A1F44]"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                                </button>
-                            </td>
-                        </tr>
+                        <tr><td colspan="5" class="text-center p-4">Cargando...</td></tr>
+                    }
+                    else if (!registrations.Any())
+                    {
+                        <tr><td colspan="5" class="text-center p-4">No hay inscripciones registradas.</td></tr>
+                    }
+                    else
+                    {
+                        @foreach (var reg in registrations)
+                        {
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-5"><span class="text-sm font-bold text-[#0A1F44]">@reg.PlayerName</span></td>
+                                <td class="px-6 py-5"><span class="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-600 uppercase">@reg.Plan</span></td>
+                                <td class="px-6 py-5"><div class="text-xs font-medium text-slate-500">@reg.StartDate.ToShortDateString() - @reg.EndDate.ToShortDateString()</div></td>
+                                <td class="px-6 py-5 text-sm font-black text-[#0A1F44]">$@reg.Amount.ToString("N2")</td>
+                                <td class="px-6 py-5"><span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase">@reg.Status</span></td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -61,26 +56,97 @@
     </div>
 </div>
 
-@code {
-    private List<InscriptionModel> MockInscriptions = new()
-    {
-        new InscriptionModel { PlayerName = "Santiago Martínez", Plan = "Anual", Amount = 15000, StartDate = "2025-08-01", EndDate = "2026-07-31", Status = "activa" },
-        new InscriptionModel { PlayerName = "Mateo López", Plan = "Semestral", Amount = 8000, StartDate = "2025-09-01", EndDate = "2026-02-28", Status = "por_vencer" },
-        new InscriptionModel { PlayerName = "Valentina García", Plan = "Anual", Amount = 15000, StartDate = "2025-06-01", EndDate = "2026-05-31", Status = "activa" }
-    };
+@if (isCreateModalVisible)
+{
+    <div class="liggo-modal-overlay" @onclick="() => isCreateModalVisible = false">
+        <div class="liggo-modal-content" @onclick:stopPropagation="true">
+            <h2 class="text-2xl font-bold text-[#0A1F44] mb-4">Nueva Inscripción</h2>
+            <EditForm Model="@newRegistration" OnValidSubmit="HandleCreateRegistration">
+                <DataAnnotationsValidator />
+                <div class="space-y-4">
+                    <div>
+                        <label class="font-medium">Jugador</label>
+                        <InputSelect @bind-Value="newRegistration.PlayerId" class="w-full p-2 border rounded">
+                            <option value="">Seleccione un jugador...</option>
+                            @if(players != null)
+                            {
+                                @foreach(var player in players)
+                                {
+                                    <option value="@player.Id">@player.FullName</option>
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => newRegistration.PlayerId)" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Plan de Pago</label>
+                        <InputSelect @bind-Value="newRegistration.Plan" class="w-full p-2 border rounded">
+                            @foreach (var plan in Enum.GetValues(typeof(PaymentPlan)))
+                            {
+                                <option value="@plan">@plan</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div>
+                        <label class="font-medium">Monto</label>
+                        <InputNumber @bind-Value="newRegistration.Amount" class="w-full p-2 border rounded" step="0.01" />
+                        <ValidationMessage For="@(() => newRegistration.Amount)" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="font-medium">Fecha de Inicio</label>
+                            <InputDate @bind-Value="newRegistration.StartDate" class="w-full p-2 border rounded" />
+                        </div>
+                        <div>
+                            <label class="font-medium">Fecha de Fin</label>
+                            <InputDate @bind-Value="newRegistration.EndDate" class="w-full p-2 border rounded" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" @onclick="() => isCreateModalVisible = false" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-[#0B6623] text-white hover:bg-[#0A1F44]">Guardar Inscripción</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+}
 
-    public class InscriptionModel
+@code {
+    private List<RegistrationDto>? registrations;
+    private List<PlayerDto>? players;
+    private bool isCreateModalVisible = false;
+    private CreateRegistrationRequest newRegistration = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        public string PlayerName { get; set; } = "";
-        public string Plan { get; set; } = "";
-        public int Amount { get; set; }
-        public string StartDate { get; set; } = "";
-        public string EndDate { get; set; } = "";
-        public string Status { get; set; } = "";
+        await LoadData();
     }
 
-    protected override void OnInitialized()
+    private async Task LoadData()
     {
-        if (!Auth.IsAuthenticated) Nav.NavigateTo("/login");
+        registrations = await RegSvc.GetRegistrationsAsync();
+        players = await PlayerSvc.GetPlayersAsync();
+    }
+
+    private void ShowCreateModal()
+    {
+        newRegistration = new();
+        isCreateModalVisible = true;
+    }
+
+    private async Task HandleCreateRegistration()
+    {
+        try
+        {
+            await RegSvc.CreateRegistrationAsync(newRegistration);
+            isCreateModalVisible = false;
+            await LoadData();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating registration: {ex.Message}");
+        }
     }
 }

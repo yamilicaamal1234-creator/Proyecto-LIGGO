@@ -1,14 +1,16 @@
 using Liggo.Domain.Entities.Operations;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Liggo.Application.Interfaces.Operations;
-
-public interface IPlayerRepository
+namespace Liggo.Application.Interfaces.Operations
 {
-    Task<Player?> GetByIdAsync(string id, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Player>> GetAllBySchoolIdAsync(string schoolId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Player>> GetAllByTeamIdAsync(string teamId, CancellationToken cancellationToken = default);
-    
-    Task AddAsync(Player player, CancellationToken cancellationToken = default);
-    Task UpdateAsync(Player player, CancellationToken cancellationToken = default);
-    Task DeleteAsync(string id, CancellationToken cancellationToken = default);
+    public interface IPlayerRepository
+    {
+        Task<Player?> GetByIdAsync(Guid id, Guid adminId);
+        Task<IEnumerable<Player>> GetAllByAdminIdAsync(Guid adminId);
+        Task AddAsync(Player player);
+        Task UpdateAsync(Player player);
+        Task DeleteAsync(Guid id, Guid adminId);
+    }
 }

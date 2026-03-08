@@ -17,7 +17,7 @@ public class UpdateMemberHandler : IRequestHandler<UpdateMemberCommand, bool>
 
     public async Task<bool> Handle(UpdateMemberCommand request, CancellationToken cancellationToken)
     {
-        var member = await _memberRepository.GetByIdAsync(request.Id, cancellationToken);
+        var member = await _memberRepository.GetByIdAsync(Guid.Parse(request.Id), cancellationToken);
         if (member == null) return false;
 
         // Actualizamos las propiedades

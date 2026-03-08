@@ -5,44 +5,34 @@ using MediatR;
 using Liggo.Application.Interfaces.Operations;
 using Liggo.Domain.Entities.Operations;
 
-namespace Liggo.Application.UseCases.Operations.Players.Commands.CreatePlayer;
-
-public class CreatePlayerHandler : IRequestHandler<CreatePlayerCommand, string>
+namespace Liggo.Application.UseCases.Operations.Players.Commands.CreatePlayer
 {
-    private readonly IPlayerRepository _playerRepository;
-
-    public CreatePlayerHandler(IPlayerRepository playerRepository)
+    public class CreatePlayerHandler : IRequestHandler<CreatePlayerCommand, Guid>
     {
-        _playerRepository = playerRepository;
-    }
+        private readonly IPlayerRepository _playerRepository;
 
-    public async Task<string> Handle(CreatePlayerCommand request, CancellationToken cancellationToken)
-    {
-        var player = new Player
+        public CreatePlayerHandler(IPlayerRepository playerRepository)
         {
-            Id = Guid.NewGuid().ToString(),
-            Status = request.Status,
-            Team = request.Team,
-            Parents = request.Parents ?? new System.Collections.Generic.List<string>(),
-            Info = new PlayerInfo
-            {
-                Name = request.Info.Name,
-                Dob = request.Info.Dob,
-                Gender = request.Info.Gender,
-                PhotoUrl = request.Info.PhotoUrl
-            },
-            Stats = new PlayerStats
-            {
-                Matches = request.Stats.Matches,
-                Goals = request.Stats.Goals,
-                Minutes = request.Stats.Minutes,
-                YellowCards = request.Stats.YellowCards,
-                RedCards = request.Stats.RedCards
-            }
-        };
+            _playerRepository = playerRepository;
+        }
 
-        await _playerRepository.AddAsync(player, cancellationToken);
+        public async Task<Guid> Handle(CreatePlayerCommand request, CancellationToken cancellationToken)
+        {
+            var player = new Player
+            {
+                Id = Guid.NewGuid(),
+                AdminId = request.AdminId,
+                FullName = request.FullName,
+                DateOfBirth = request.DateOfBirth,
+                AssignedTeam = request.AssignedTeam,
+                GuardianName = request.GuardianName,
+                GuardianPhone = request.GuardianPhone,
+                Relationship = request.Relationship
+            };
 
-        return player.Id;
+            await _playerRepository.AddAsync(player);
+
+            return player.Id;
+        }
     }
 }

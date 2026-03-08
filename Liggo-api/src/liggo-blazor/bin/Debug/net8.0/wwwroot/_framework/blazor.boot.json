@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "liggo-blazor",
   "resources": {
-    "hash": "sha256-RerWMm+46bofKB4EFPNgFlvkgePslsdtMEPAmrcWPNU=",
+    "hash": "sha256-VruCcEX4wGqsRQ9y+yFchtuuTTB9A6XmSDGmxdo39og=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-NljIbpK/1KCj0+knpX8U77Rbl5kTtfFIuFjK7AuczEw="
     },
@@ -210,10 +210,10 @@
       "mscorlib.wasm": "sha256-oV7k+vcNqj7FS6Y/lMtdhVlq3myDH55/wVxmO4QPrw4=",
       "netstandard.wasm": "sha256-XMXMB0WW//vbNNgQiFAqYo7IJ2C4yQX590aoAbOtTB4=",
       "System.Private.CoreLib.wasm": "sha256-tuhzUgbFn7ji3yhMSxyBLHAps9h0RsFnq+8pUoizHiw=",
-      "liggo-blazor.wasm": "sha256-KXsqc+PIpbiEIZIkua+Un18x7nOtElreyU60pAAFq9I="
+      "liggo-blazor.wasm": "sha256-fmtDj1B08S+XfoeUTeWIJ9T66gV+Orbd9nx39Z3Q9iM="
     },
     "pdb": {
-      "liggo-blazor.pdb": "sha256-8Mv9KeuO9gMo4AqSzOWA5kc4pt55DXlRsqFi9R/9Fec="
+      "liggo-blazor.pdb": "sha256-8vChgLCvmdFyUj7+ASTXOnPHgP8/beonL7UyUZVhUWA="
     }
   },
   "cacheBootResources": true,

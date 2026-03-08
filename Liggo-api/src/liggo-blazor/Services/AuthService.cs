@@ -84,6 +84,16 @@ public class AuthService
         NotifyStateChanged();
     }
 
+    public void UpdateUser(string name, string avatar)
+    {
+        if (CurrentUser != null)
+        {
+            CurrentUser.Name = name;
+            CurrentUser.Avatar = avatar;
+            NotifyStateChanged();
+        }
+    }
+
     private void NotifyStateChanged() => OnChange?.Invoke();
 
     // DTOs internos para mapear la respuesta de la API

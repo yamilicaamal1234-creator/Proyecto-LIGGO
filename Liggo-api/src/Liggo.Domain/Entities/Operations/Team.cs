@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Liggo.Domain.Entities.Operations;
 
 public class Team
@@ -7,6 +9,7 @@ public class Team
     public string Category { get; set; } = string.Empty;
     public string Coach { get; set; } = string.Empty;
     public string LogoUrl { get; set; } = string.Empty;
+    [NotMapped]
     public TeamStats StatsTeam { get; set; } = new();
 }
 

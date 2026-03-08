@@ -16,10 +16,10 @@ public class DeleteSchoolHandler : IRequestHandler<DeleteSchoolCommand, bool>
 
     public async Task<bool> Handle(DeleteSchoolCommand request, CancellationToken cancellationToken)
     {
-        var school = await _schoolRepository.GetByIdAsync(request.Id, cancellationToken);
+        var school = await _schoolRepository.GetByIdAsync(Guid.Parse(request.Id), Guid.Empty);
         if (school == null) return false;
 
-        await _schoolRepository.DeleteAsync(request.Id, cancellationToken);
+        await _schoolRepository.DeleteAsync(Guid.Parse(request.Id), Guid.Empty);
         return true;
     }
 }

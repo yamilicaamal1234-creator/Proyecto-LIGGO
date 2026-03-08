@@ -21,7 +21,7 @@ public class CreateMemberHandler : IRequestHandler<CreateMemberCommand, string>
     {
         var member = new Member
         {
-            Id = Guid.NewGuid().ToString(), // ID principal en Firebase
+            Id = Guid.NewGuid(), // ID principal en Firebase
             Uid = request.Uid,
             Role = request.Role,
             Profile = new MemberProfile
@@ -44,8 +44,8 @@ public class CreateMemberHandler : IRequestHandler<CreateMemberCommand, string>
                 }) ?? new Dictionary<string, DependentSummary>()
         };
 
-        await _memberRepository.AddAsync(member, cancellationToken);
+        await _memberRepository.AddAsync(member);
 
-        return member.Id;
+        return member.Id.ToString();
     }
 }

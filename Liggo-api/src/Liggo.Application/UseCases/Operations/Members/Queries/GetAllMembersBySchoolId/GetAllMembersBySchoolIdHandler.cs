@@ -20,13 +20,13 @@ public class GetAllMembersBySchoolIdHandler : IRequestHandler<GetAllMembersBySch
 
     public async Task<IEnumerable<MemberResponse>> Handle(GetAllMembersBySchoolIdQuery request, CancellationToken cancellationToken)
     {
-        var members = await _repository.GetAllBySchoolIdAsync(request.SchoolId, cancellationToken);
+        var members = await _repository.GetAllBySchoolIdAsync(Guid.Parse(request.SchoolId), cancellationToken);
         
         if (members == null || !members.Any())
             return Enumerable.Empty<MemberResponse>();
 
         return members.Select(member => new MemberResponse(
-            member.Id, 
+            member.Id.ToString(), 
             member.Uid,
             new MemberProfileDto(member.Profile.Name, member.Profile.Phone),
             member.Role,

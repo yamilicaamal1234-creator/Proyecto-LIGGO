@@ -6,17 +6,17 @@ public class CreateIncidentValidator : AbstractValidator<CreateIncidentCommand>
 {
     public CreateIncidentValidator()
     {
+        RuleFor(x => x.PlayerId)
+            .NotEmpty().WithMessage("El jugador es obligatorio.");
+
         RuleFor(x => x.Type)
-            .Must(x => x == "injury" || x == "discipline")
-            .WithMessage("El tipo de incidente solo puede ser 'injury' o 'discipline'.");
+            .NotEmpty().WithMessage("El tipo de incidente es obligatorio.");
 
         RuleFor(x => x.Severity)
-            .Must(x => x == "low" || x == "medium" || x == "high")
-            .WithMessage("La severidad debe ser 'low', 'medium' o 'high'.");
+            .NotEmpty().WithMessage("La severidad es obligatoria.");
 
         RuleFor(x => x.Status)
-            .Must(x => x == "open" || x == "closed")
-            .WithMessage("El estado debe ser 'open' o 'closed'.");
+            .NotEmpty().WithMessage("El estado es obligatorio.");
 
         RuleFor(x => x.Description)
             .NotEmpty().WithMessage("La descripción del incidente es obligatoria.");

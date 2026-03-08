@@ -16,10 +16,10 @@ public class DeleteMemberHandler : IRequestHandler<DeleteMemberCommand, bool>
 
     public async Task<bool> Handle(DeleteMemberCommand request, CancellationToken cancellationToken)
     {
-        var member = await _memberRepository.GetByIdAsync(request.Id, cancellationToken);
+        var member = await _memberRepository.GetByIdAsync(Guid.Parse(request.Id), cancellationToken);
         if (member == null) return false;
 
-        await _memberRepository.DeleteAsync(request.Id, cancellationToken);
+        await _memberRepository.DeleteAsync(Guid.Parse(request.Id), cancellationToken);
         return true;
     }
 }

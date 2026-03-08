@@ -1,21 +1,25 @@
 using FluentValidation;
+using System;
 
-namespace Liggo.Application.UseCases.Operations.Players.Commands.CreatePlayer;
-
-public class CreatePlayerValidator : AbstractValidator<CreatePlayerCommand>
+namespace Liggo.Application.UseCases.Operations.Players.Commands.CreatePlayer
 {
-    public CreatePlayerValidator()
+    public class CreatePlayerValidator : AbstractValidator<CreatePlayerCommand>
     {
-        RuleFor(x => x.Status).NotEmpty().WithMessage("El estado es obligatorio.");
-        RuleFor(x => x.Team).NotEmpty().WithMessage("El ID del equipo es obligatorio.");
-        
-        RuleFor(x => x.Info).NotNull().WithMessage("La información del jugador es obligatoria.");
-        When(x => x.Info != null, () =>
+        public CreatePlayerValidator()
         {
-            RuleFor(x => x.Info.Name).NotEmpty().WithMessage("El nombre del jugador es obligatorio.");
-            RuleFor(x => x.Info.Dob).NotEmpty().WithMessage("La fecha de nacimiento es obligatoria.");
-        });
+            RuleFor(x => x.FullName)
+                .NotEmpty().WithMessage("El nombre completo es obligatorio.")
+                .MaximumLength(100).WithMessage("El nombre no puede exceder los 100 caracteres.");
 
-        RuleFor(x => x.Stats).NotNull().WithMessage("Las estadísticas son obligatorias (pueden ir en cero).");
+            RuleFor(x => x.DateOfBirth)
+                .NotEmpty().WithMessage("La fecha de nacimiento es obligatoria.")
+                .LessThan(DateTime.Now).WithMessage("La fecha de nacimiento no puede ser en el futuro.");
+
+            RuleFor(x => x.GuardianName)
+                .NotEmpty().WithMessage("El nombre del tutor es obligatorio.");
+
+            RuleFor(x => x.GuardianPhone)
+                .NotEmpty().WithMessage("El teléfono del tutor es obligatorio.");
+        }
     }
 }

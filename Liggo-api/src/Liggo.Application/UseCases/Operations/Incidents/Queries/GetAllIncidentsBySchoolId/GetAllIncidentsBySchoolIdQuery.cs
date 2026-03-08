@@ -2,6 +2,6 @@ using System.Collections.Generic;
 using MediatR;
 using Liggo.Application.UseCases.Operations.Incidents.Queries.GetIncidentById; // Reusamos el DTO de respuesta
 
-namespace Liggo.Application.UseCases.Operations.Incidents.Queries.GetAllIncidentsBySchoolId;
+namespace Liggo.Application.UseCases.Operations.Incidents.Queries.GetAllIncidentsByAdminId;
 
-public record GetAllIncidentsBySchoolIdQuery(string SchoolId) : IRequest<IEnumerable<IncidentResponse>>;
+public record GetAllIncidentsByAdminIdQuery(Guid AdminId) : IRequest<IEnumerable<IncidentResponse>>;

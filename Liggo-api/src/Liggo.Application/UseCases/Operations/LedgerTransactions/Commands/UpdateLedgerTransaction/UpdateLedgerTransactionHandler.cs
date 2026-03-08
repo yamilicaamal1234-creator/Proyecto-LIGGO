@@ -16,7 +16,7 @@ public class UpdateLedgerTransactionHandler : IRequestHandler<UpdateLedgerTransa
 
     public async Task<bool> Handle(UpdateLedgerTransactionCommand request, CancellationToken cancellationToken)
     {
-        var transaction = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var transaction = await _repository.GetByIdAsync(Guid.Parse(request.Id), Guid.Empty);
         if (transaction == null) return false;
 
         transaction.Type = request.Type;
@@ -27,10 +27,13 @@ public class UpdateLedgerTransactionHandler : IRequestHandler<UpdateLedgerTransa
         transaction.Method = request.Type == "payment" ? request.Method : string.Empty;
         transaction.TransactionRef = request.Type == "payment" ? request.TransactionRef : string.Empty;
         
-        transaction.RelatedUsers.PayerName = request.RelatedUsers.PayerName;
-        transaction.RelatedUsers.StudentName = request.RelatedUsers.StudentName;
+        transaction.RelatedUsers = new Liggo.Domain.Entities.Operations.TransactionRelatedUsers
+        {
+            PayerName = request.RelatedUsers.PayerName,
+            StudentName = request.RelatedUsers.StudentName
+        };
 
-        await _repository.UpdateAsync(transaction, cancellationToken);
+        await _repository.UpdateAsync(transaction);
         return true;
     }
 }

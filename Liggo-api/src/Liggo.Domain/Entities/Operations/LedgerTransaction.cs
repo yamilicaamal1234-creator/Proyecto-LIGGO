@@ -1,8 +1,12 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Liggo.Domain.Entities.Operations;
 
-public class LedgerTransaction
+public class LedgerTransaction : BaseEntity
 {
-    public string Id { get; set; } = string.Empty;
+    public Guid SchoolId { get; set; } // Foreign key to School
+    public Guid MemberId { get; set; } // Foreign key to Member (Payer)
     public string Type { get; set; } = string.Empty; // "charge" o "payment"
     public decimal Amount { get; set; }
     
@@ -11,12 +15,13 @@ public class LedgerTransaction
     public string Method { get; set; } = string.Empty;  // Para "payment"
     public string TransactionRef { get; set; } = string.Empty; // Para "payment"
 
-    public TransactionRelatedUsers RelatedUsers { get; set; } = new();
-    public DateTime CreatedAt { get; set; }
-}
+    public string PayerName { get; set; } = string.Empty; // Flattened from TransactionRelatedUsers
+    public string StudentName { get; set; } = string.Empty; // Flattened from TransactionRelatedUsers
 
-public class TransactionRelatedUsers
-{
-    public string PayerName { get; set; } = string.Empty;
-    public string StudentName { get; set; } = string.Empty;
+    [NotMapped]
+    public TransactionRelatedUsers RelatedUsers { get; set; } = new();
+
+    // Navigation properties
+    public School School { get; set; } = null!;
+    public Member Member { get; set; } = null!;
 }

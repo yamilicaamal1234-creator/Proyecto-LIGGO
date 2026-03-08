@@ -20,4 +20,10 @@
     <ProjectReference Include="..\Liggo.Infrastructure\Liggo.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Esto asegura que el archivo firebasekey.json se copie a la carpeta de salida (bin) -->
+    <None Update="firebasekey.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

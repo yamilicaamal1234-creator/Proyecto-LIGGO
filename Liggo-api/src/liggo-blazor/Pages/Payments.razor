@@ -1,6 +1,8 @@
 @page "/payments"
-@inject AuthService Auth
 @inject NavigationManager Nav
+@inject PaymentService PaymentSvc
+@inject PlayerService PlayerSvc
+@using liggo_blazor.Models
 
 <div class="space-y-8">
     <div class="flex items-center justify-between">
@@ -9,43 +11,32 @@
             <p class="text-slate-500 font-medium">Control financiero y registro de transacciones.</p>
         </div>
         <div class="flex items-center gap-3">
-            <button class="bg-white hover:bg-slate-50 text-[#0A1F44] px-4 py-2.5 rounded-xl font-bold transition-all shadow-sm border border-slate-100 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                Exportar
-            </button>
-            <button class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
+            <button @onclick="ShowCreateModal" class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 Nuevo Pago
             </button>
         </div>
     </div>
 
-    @* Estadísticas Rápidas *@
     <div class="grid gap-6 sm:grid-cols-3">
         <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-50">
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Recaudado (Feb)</p>
-            <p class="text-2xl font-black text-[#0A1F44] mt-1">$12,450.00</p>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Recaudado (Este Mes)</p>
+            <p class="text-2xl font-black text-[#0A1F44] mt-1">@totalCollectedThisMonth.ToString("C")</p>
         </div>
         <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-50">
             <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pendientes</p>
-            <p class="text-2xl font-black text-amber-500 mt-1">14 Pagos</p>
+            <p class="text-2xl font-black text-amber-500 mt-1">@pendingPaymentsCount Pagos</p>
         </div>
         <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-50">
             <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Vencidos</p>
-            <p class="text-2xl font-black text-red-500 mt-1">3 Pagos</p>
+            <p class="text-2xl font-black text-red-500 mt-1">@overduePaymentsCount Pagos</p>
         </div>
     </div>
 
-    @* Tabla de Pagos *@
     <div class="bg-white rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-slate-50 overflow-hidden">
-        <div class="p-6 border-b border-slate-50 flex items-center justify-between">
+        <div class="p-6 border-b border-slate-50">
             <h3 class="text-lg font-bold text-[#0A1F44]">Historial de Transacciones</h3>
-            <div class="relative w-64">
-                <input placeholder="Buscar jugador..." class="w-full bg-slate-50 border border-slate-100 px-10 py-2 rounded-xl text-sm focus:border-[#0B6623] transition-all outline-none" />
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-2.5 text-slate-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </div>
         </div>
-
         <div class="overflow-x-auto">
             <table class="w-full text-left">
                 <thead class="bg-slate-50/50 text-slate-400 text-xs font-bold uppercase tracking-widest">
@@ -55,33 +46,29 @@
                         <th class="px-6 py-4">Concepto</th>
                         <th class="px-6 py-4">Monto</th>
                         <th class="px-6 py-4">Estado</th>
-                        <th class="px-6 py-4">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50">
-                    @foreach (var p in MockPayments)
+                <tbody>
+                    @if (payments == null)
                     {
-                        <tr class="hover:bg-slate-50/50 transition-colors">
-                            <td class="px-6 py-5 text-sm font-medium text-slate-500">@p.Date</td>
-                            <td class="px-6 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-8 w-8 rounded-full bg-[#0A1F44]/5 flex items-center justify-center font-bold text-[#0A1F44] text-[10px]">
-                                        @p.PlayerName.Substring(0, 2).ToUpper()
-                                    </div>
-                                    <span class="text-sm font-bold text-[#0A1F44]">@p.PlayerName</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-5 text-sm font-medium text-slate-500">@p.Concept</td>
-                            <td class="px-6 py-5 text-sm font-black text-[#0A1F44]">$@p.Amount</td>
-                            <td class="px-6 py-5">
-                                <StatusBadge Status="@p.Status" />
-                            </td>
-                            <td class="px-6 py-5">
-                                <button class="text-[#0B6623] hover:text-[#0A1F44] font-bold text-xs uppercase transition-colors">
-                                    Ver Recibo
-                                </button>
-                            </td>
-                        </tr>
+                        <tr><td colspan="5" class="text-center p-4">Cargando...</td></tr>
+                    }
+                    else if (!payments.Any())
+                    {
+                        <tr><td colspan="5" class="text-center p-4">No hay pagos registrados.</td></tr>
+                    }
+                    else
+                    {
+                        @foreach (var p in payments)
+                        {
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-5 text-sm font-medium text-slate-500">@p.Date.ToShortDateString()</td>
+                                <td class="px-6 py-5"><span class="text-sm font-bold text-[#0A1F44]">@p.PlayerName</span></td>
+                                <td class="px-6 py-5 text-sm font-medium text-slate-500">@p.Concept</td>
+                                <td class="px-6 py-5 text-sm font-black text-[#0A1F44]">@p.Amount.ToString("C")</td>
+                                <td class="px-6 py-5"><span class="px-3 py-1 rounded-full text-xs font-bold uppercase @GetStatusClass(p.Status)">@p.Status</span></td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -89,26 +76,121 @@
     </div>
 </div>
 
+@if (isCreateModalVisible)
+{
+    <div class="liggo-modal-overlay" @onclick="() => isCreateModalVisible = false">
+        <div class="liggo-modal-content" @onclick:stopPropagation="true">
+            <h2 class="text-2xl font-bold text-[#0A1F44] mb-4">Nuevo Pago</h2>
+            <EditForm Model="@newPayment" OnValidSubmit="HandleCreatePayment">
+                <DataAnnotationsValidator />
+                <div class="space-y-4">
+                    <div>
+                        <label class="font-medium">Jugador</label>
+                        <InputSelect @bind-Value="newPayment.PlayerId" class="w-full p-2 border rounded">
+                            <option value="">Seleccione un jugador...</option>
+                            @if(players != null)
+                            {
+                                @foreach(var player in players)
+                                {
+                                    <option value="@player.Id">@player.FullName</option>
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => newPayment.PlayerId)" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Concepto</label>
+                        <InputText @bind-Value="newPayment.Concept" class="w-full p-2 border rounded" />
+                        <ValidationMessage For="@(() => newPayment.Concept)" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Monto</label>
+                        <InputNumber @bind-Value="newPayment.Amount" class="w-full p-2 border rounded" />
+                        <ValidationMessage For="@(() => newPayment.Amount)" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Fecha</label>
+                        <InputDate @bind-Value="newPayment.Date" class="w-full p-2 border rounded" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Estado</label>
+                        <InputSelect @bind-Value="newPayment.Status" class="w-full p-2 border rounded">
+                            @foreach (var status in Enum.GetValues(typeof(PaymentStatus)))
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" @onclick="() => isCreateModalVisible = false" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-[#0B6623] text-white hover:bg-[#0A1F44]">Guardar Pago</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+}
+
 @code {
-    private List<PaymentModel> MockPayments = new()
+    private List<PaymentDto>? payments;
+    private List<PlayerDto>? players;
+    private bool isCreateModalVisible = false;
+    private CreatePaymentRequest newPayment = new();
+
+    private decimal totalCollectedThisMonth = 0;
+    private int pendingPaymentsCount = 0;
+    private int overduePaymentsCount = 0;
+
+    protected override async Task OnInitializedAsync()
     {
-        new PaymentModel { Date = "2026-02-18", PlayerName = "Santiago Martínez", Concept = "Cuota mensual", Amount = 1500, Status = "pagado" },
-        new PaymentModel { Date = "2026-02-15", PlayerName = "Mateo López", Concept = "Inscripción", Amount = 2500, Status = "pendiente" },
-        new PaymentModel { Date = "2026-02-10", PlayerName = "Valentina García", Concept = "Cuota mensual", Amount = 1500, Status = "pagado" },
-        new PaymentModel { Date = "2026-02-05", PlayerName = "Sebastián Hernández", Concept = "Cuota mensual", Amount = 1200, Status = "vencido" }
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        payments = await PaymentSvc.GetPaymentsAsync();
+        players = await PlayerSvc.GetPlayersAsync();
+        CalculateDashboardStats();
+    }
+
+    private void CalculateDashboardStats()
+    {
+        if (payments == null) return;
+        var now = DateTime.Now;
+        totalCollectedThisMonth = payments
+            .Where(p => p.Status == "Paid" && p.Date.Year == now.Year && p.Date.Month == now.Month)
+            .Sum(p => p.Amount);
+        pendingPaymentsCount = payments.Count(p => p.Status == "Pending");
+        overduePaymentsCount = payments.Count(p => p.Status == "Overdue");
+    }
+
+    private void ShowCreateModal()
+    {
+        newPayment = new();
+        isCreateModalVisible = true;
+    }
+
+    private async Task HandleCreatePayment()
+    {
+        try
+        {
+            await PaymentSvc.CreatePaymentAsync(newPayment);
+            isCreateModalVisible = false;
+            await LoadData();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating payment: {ex.Message}");
+        }
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Paid" => "bg-green-100 text-green-800",
+        "Pending" => "bg-amber-100 text-amber-800",
+        "Overdue" => "bg-red-100 text-red-800",
+        "Canceled" => "bg-gray-100 text-gray-800",
+        _ => ""
     };
-
-    public class PaymentModel
-    {
-        public string Date { get; set; } = "";
-        public string PlayerName { get; set; } = "";
-        public string Concept { get; set; } = "";
-        public int Amount { get; set; }
-        public string Status { get; set; } = "";
-    }
-
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated) Nav.NavigateTo("/login");
-    }
 }

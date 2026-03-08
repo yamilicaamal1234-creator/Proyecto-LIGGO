@@ -15,17 +15,17 @@ public class GetIncidentByIdHandler : IRequestHandler<GetIncidentByIdQuery, Inci
 
     public async Task<IncidentResponse?> Handle(GetIncidentByIdQuery request, CancellationToken cancellationToken)
     {
-        var incident = await _incidentRepository.GetByIdAsync(request.Id, cancellationToken);
+        var incident = await _incidentRepository.GetByIdAsync(request.Id, Guid.Empty);
 
         if (incident == null) return null;
 
         return new IncidentResponse(
             incident.Id,
-            incident.Type,
+            incident.Type.ToString(),
             incident.Severity,
             new IncidentContextDto(incident.Context.Student, incident.Context.Event),
             incident.Description,
-            incident.Status
+            incident.Status.ToString()
         );
     }
 }

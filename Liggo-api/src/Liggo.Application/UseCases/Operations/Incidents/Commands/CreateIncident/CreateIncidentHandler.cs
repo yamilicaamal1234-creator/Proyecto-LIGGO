@@ -2,10 +2,11 @@ using System;
 using MediatR;
 using Liggo.Application.Interfaces.Operations;
 using Liggo.Domain.Entities.Operations;
+using Liggo.Domain.Enums;
 
 namespace Liggo.Application.UseCases.Operations.Incidents.Commands.CreateIncident;
 
-public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, string>
+public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, Guid>
 {
     private readonly IIncidentRepository _incidentRepository;
 
@@ -14,23 +15,36 @@ public class CreateIncidentHandler : IRequestHandler<CreateIncidentCommand, stri
         _incidentRepository = incidentRepository;
     }
 
-    public async Task<string> Handle(CreateIncidentCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateIncidentCommand request, CancellationToken cancellationToken)
     {
+        if (!Guid.TryParse(request.PlayerId, out var playerId))
+        {
+            throw new ArgumentException("Invalid PlayerId format");
+        }
+
+        if (!Enum.TryParse<IncidentType>(request.Type, true, out var incidentType))
+            incidentType = IncidentType.Administrative;
+
+        if (!Enum.TryParse<IncidentStatus>(request.Status, true, out var incidentStatus))
+            incidentStatus = IncidentStatus.Active;
+
         var incident = new Incident
         {
-            Id = Guid.NewGuid().ToString(), // Generamos el ID para Firebase
-            Type = request.Type,
-            Severity = request.Severity,
-            Description = request.Description,
-            Status = request.Status,
+            Id = Guid.NewGuid(),
+            AdminId = request.AdminId,
+            PlayerId = playerId,
+            Type = incidentType,
+            Severity = request.Severity ?? "Moderate",
+            Description = request.Description ?? "",
+            Status = incidentStatus,
             Context = new IncidentContext
             {
-                Student = request.Context.Student,
-                Event = request.Context.Event
+                Student = request.Context?.Student ?? "",
+                Event = request.Context?.Event ?? "Manual Report"
             }
         };
 
-        await _incidentRepository.AddAsync(incident, cancellationToken);
+        await _incidentRepository.AddAsync(incident);
 
         return incident.Id;
     }

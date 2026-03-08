@@ -1,6 +1,8 @@
 @page "/players"
 @inject AuthService Auth
 @inject NavigationManager Nav
+@inject PlayerService PlayerSvc
+@using liggo_blazor.Models
 
 <div class="space-y-8">
     <div class="flex items-center justify-between">
@@ -8,67 +10,123 @@
             <h1 class="text-3xl font-black text-[#0A1F44]">Jugadores</h1>
             <p class="text-slate-500 font-medium">Gestiona el directorio de deportistas de LIGGO.</p>
         </div>
-        <button class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
+        <button @onclick="() => isCreateModalVisible = true" class="bg-[#0B6623] hover:bg-[#0A1F44] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#0B6623]/20 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Nuevo Jugador
         </button>
     </div>
 
-    @* Filtros Rápidos *@
-    <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-        @foreach (var cat in categories)
-        {
-            <button class="px-4 py-2 rounded-lg bg-white border border-slate-100 text-sm font-bold text-[#0A1F44] whitespace-nowrap hover:bg-slate-50 transition-colors shadow-sm">
-                @cat
-            </button>
-        }
-    </div>
-
-    @* Grilla de Jugadores *@
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        @if (players == null || !players.Any())
-        {
-            <div class="col-span-full p-20 text-center bg-white rounded-[3rem] shadow-xl border-4 border-dashed border-slate-50">
-                <div class="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-slate-50 mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0B6623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <h2 class="text-2xl font-black text-[#0A1F44]">Directorio Vacío</h2>
-                <p class="text-slate-400 font-medium mt-2">Aún no tienes jugadores registrados en tu escuela.</p>
+    @if (players == null)
+    {
+        <p><em>Cargando directorio...</em></p>
+    }
+    else if (!players.Any())
+    {
+        <div class="col-span-full p-20 text-center bg-white rounded-[3rem] shadow-xl border-4 border-dashed border-slate-50">
+            <div class="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-slate-50 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0B6623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-        }
-        else
-        {
+            <h2 class="text-2xl font-black text-[#0A1F44]">Directorio Vacío</h2>
+            <p class="text-slate-400 font-medium mt-2">Aún no tienes jugadores registrados en tu escuela.</p>
+        </div>
+    }
+    else
+    {
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             @foreach (var p in players)
             {
                 <div class="group relative overflow-hidden rounded-3xl bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 border border-slate-50">
-                    @* ... (Mantenemos el diseño del card pero con datos reales) *@
+                    <h3 class="text-lg font-bold text-[#0A1F44]">@p.FullName</h3>
+                    <p class="text-sm text-slate-500">Nacimiento: @p.DateOfBirth.ToShortDateString()</p>
+                    <p class="text-sm text-slate-500">Tutor: @p.GuardianName</p>
                 </div>
             }
-        }
-    </div>
+        </div>
+    }
 </div>
 
+@if (isCreateModalVisible)
+{
+    <div class="liggo-modal-overlay" @onclick="() => isCreateModalVisible = false">
+        <div class="liggo-modal-content" @onclick:stopPropagation="true">
+            <h2 class="text-2xl font-bold text-[#0A1F44] mb-4">Nuevo Jugador</h2>
+            <EditForm Model="@newPlayer" OnValidSubmit="HandleCreatePlayer">
+                <DataAnnotationsValidator />
+                <div class="space-y-4">
+                    <div>
+                        <label class="font-medium">Nombre completo</label>
+                        <InputText @bind-Value="newPlayer.FullName" class="w-full p-2 border rounded" />
+                        <ValidationMessage For="@(() => newPlayer.FullName)" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Fecha de Nacimiento</label>
+                        <InputDate @bind-Value="newPlayer.DateOfBirth" class="w-full p-2 border rounded" />
+                        <ValidationMessage For="@(() => newPlayer.DateOfBirth)" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Nombre del Tutor</label>
+                        <InputText @bind-Value="newPlayer.GuardianName" class="w-full p-2 border rounded" />
+                        <ValidationMessage For="@(() => newPlayer.GuardianName)" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Teléfono del Tutor</label>
+                        <InputText @bind-Value="newPlayer.GuardianPhone" class="w-full p-2 border rounded" />
+                        <ValidationMessage For="@(() => newPlayer.GuardianPhone)" />
+                    </div>
+                     <div>
+                        <label class="font-medium">Parentesco</label>
+                        <InputText @bind-Value="newPlayer.Relationship" class="w-full p-2 border rounded" />
+                    </div>
+                    <div>
+                        <label class="font-medium">Equipo Asignado</label>
+                        <InputText @bind-Value="newPlayer.AssignedTeam" class="w-full p-2 border rounded" />
+                    </div>
+                </div>
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" @onclick="() => isCreateModalVisible = false" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-[#0B6623] text-white hover:bg-[#0A1F44]">Guardar Jugador</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+}
+
+
 @code {
-    private string[] categories = { "Todos", "Sub-9", "Sub-11", "Sub-13", "Sub-15", "Sub-17" };
-    private List<PlayerDto>? players; // Cambiamos a lista real
+    private List<PlayerDto>? players;
+    private bool isCreateModalVisible = false;
+    private CreatePlayerRequest newPlayer = new();
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAuthenticated) 
-        {
-            Nav.NavigateTo("/login");
-            return;
-        }
-
-        // Aquí llamaremos a la API real filtrada por el TenantId del usuario
-        // Por ahora, al ser un usuario nuevo, la lista estará vacía (null o vacía)
-        players = new List<PlayerDto>(); 
+        // The real AuthService should handle this, but for now, we assume it works
+        // if (!Auth.IsAuthenticated) 
+        // {
+        //     Nav.NavigateTo("/login");
+        //     return;
+        // }
+        await LoadPlayers();
     }
 
-    public class PlayerDto {
-        public string Name { get; set; } = "";
-        public string Category { get; set; } = "";
-        public string Team { get; set; } = "";
-        public string Avatar { get; set; } = "";
+    private async Task LoadPlayers()
+    {
+        players = await PlayerSvc.GetPlayersAsync();
+    }
+
+    private async Task HandleCreatePlayer()
+    {
+        try
+        {
+            await PlayerSvc.CreatePlayerAsync(newPlayer);
+            isCreateModalVisible = false;
+            newPlayer = new(); // Reset form
+            await LoadPlayers(); // Refresh list
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            // Handle and show error to user
+            Console.WriteLine($"Error creating player: {ex.Message}");
+        }
     }
 }

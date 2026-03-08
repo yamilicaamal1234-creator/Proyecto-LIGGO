@@ -20,19 +20,19 @@ public class MemberRepository : IMemberRepository
         _db = firestoreProvider.GetDb();
     }
 
-    public async Task<Member?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<Member?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var snapshot = await _db.Collection(CollectionName).Document(id).GetSnapshotAsync(cancellationToken);
+        var snapshot = await _db.Collection(CollectionName).Document(id.ToString()).GetSnapshotAsync(cancellationToken);
         if (!snapshot.Exists) return null;
 
         var doc = snapshot.ConvertTo<MemberDocument>();
         return MapToDomain(doc, snapshot.Id);
     }
 
-    public async Task<IEnumerable<Member>> GetAllBySchoolIdAsync(string schoolId, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Member>> GetAllBySchoolIdAsync(Guid schoolId, CancellationToken cancellationToken = default)
     {
         // Consulta nativa indexada por SchoolId
-        var query = _db.Collection(CollectionName).WhereEqualTo("SchoolId", schoolId);
+        var query = _db.Collection(CollectionName).WhereEqualTo("SchoolId", schoolId.ToString());
         var snapshot = await query.GetSnapshotAsync(cancellationToken);
 
         return snapshot.Documents
@@ -43,19 +43,19 @@ public class MemberRepository : IMemberRepository
     public async Task AddAsync(Member member, CancellationToken cancellationToken = default)
     {
         var doc = MapToDocument(member);
-        await _db.Collection(CollectionName).Document(member.Id).SetAsync(doc, cancellationToken: cancellationToken);
+        await _db.Collection(CollectionName).Document(member.Id.ToString()).SetAsync(doc, cancellationToken: cancellationToken);
     }
 
     public async Task UpdateAsync(Member member, CancellationToken cancellationToken = default)
     {
         var doc = MapToDocument(member);
         // Usamos MergeAll para no borrar el SchoolId u otros campos que Firebase tenga pero que no bajamos al Dominio
-        await _db.Collection(CollectionName).Document(member.Id).SetAsync(doc, SetOptions.MergeAll, cancellationToken);
+        await _db.Collection(CollectionName).Document(member.Id.ToString()).SetAsync(doc, SetOptions.MergeAll, cancellationToken);
     }
 
-    public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        await _db.Collection(CollectionName).Document(id).DeleteAsync(cancellationToken: cancellationToken);
+        await _db.Collection(CollectionName).Document(id.ToString()).DeleteAsync(cancellationToken: cancellationToken);
     }
 
     // ==========================================
@@ -66,7 +66,7 @@ public class MemberRepository : IMemberRepository
     {
         return new Member
         {
-            Id = realId,
+            Id = Guid.Parse(realId),
             Uid = doc.Uid ?? string.Empty,
             Role = doc.Role ?? string.Empty,
             Profile = new MemberProfile

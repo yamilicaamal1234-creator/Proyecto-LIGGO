@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Liggo.Domain.Entities.Billing;
+using Liggo.Domain.Entities.Operations;
 
 namespace Liggo.Infrastructure.Persistence.MySQL;
 
@@ -16,6 +17,19 @@ public class ApplicationDbContext : DbContext
     public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<Plan> Plans { get; set; } = null!;
     public DbSet<Subscription> Subscriptions { get; set; } = null!;
+    public DbSet<Player> Players { get; set; } = null!;
+    public DbSet<Registration> Registrations { get; set; } = null!;
+    public DbSet<Match> Matches { get; set; } = null!;
+    public DbSet<Attendance> Attendances { get; set; } = null!;
+    public DbSet<Payment> Payments { get; set; } = null!;
+    public DbSet<Incident> Incidents { get; set; } = null!;
+
+    // DbSets que faltaban y causaban errores de compilación
+    public DbSet<LedgerTransaction> LedgerTransactions { get; set; } = null!;
+    public DbSet<Member> Members { get; set; } = null!;
+    public DbSet<School> Schools { get; set; } = null!;
+    public DbSet<SystemUser> SystemUsers { get; set; } = null!;
+    public DbSet<Team> Teams { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

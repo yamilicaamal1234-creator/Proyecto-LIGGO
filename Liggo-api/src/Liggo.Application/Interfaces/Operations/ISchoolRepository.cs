@@ -1,14 +1,16 @@
 using Liggo.Domain.Entities.Operations;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Liggo.Application.Interfaces.Operations;
-
-public interface ISchoolRepository
+namespace Liggo.Application.Interfaces.Operations
 {
-    Task<School?> GetByIdAsync(string id, CancellationToken cancellationToken = default);
-    // Buscamos las escuelas que pertenecen a un Tenant (SaaS)
-    Task<IEnumerable<School>> GetAllByTenantIdAsync(string tenantId, CancellationToken cancellationToken = default);
-    
-    Task AddAsync(School school, CancellationToken cancellationToken = default);
-    Task UpdateAsync(School school, CancellationToken cancellationToken = default);
-    Task DeleteAsync(string id, CancellationToken cancellationToken = default);
+    public interface ISchoolRepository
+    {
+        Task<School?> GetByIdAsync(Guid id, Guid adminId);
+        Task<IEnumerable<School>> GetAllByAdminIdAsync(Guid adminId);
+        Task AddAsync(School school);
+        Task UpdateAsync(School school);
+        Task DeleteAsync(Guid id, Guid adminId);
+    }
 }

@@ -2075,6 +2075,6 @@ C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\s
 C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Authorization.dll
 C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.Authorization.wasm
 C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\compressed\nfanunsixz-{0}-kvcvutmuvo-kvcvutmuvo.gz
-C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\compressed\h1evef4wad-{0}-bj2shid2m6-bj2shid2m6.gz
-C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\compressed\2whocqd4ud-{0}-8mtcbww90p-8mtcbww90p.gz
-C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\compressed\lgjacmxw22-{0}-w0lnq37cj7-w0lnq37cj7.gz
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\compressed\h1evef4wad-{0}-6farngnox0-6farngnox0.gz
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\compressed\2whocqd4ud-{0}-qix93rjycc-qix93rjycc.gz
+C:\Users\Mili\Documents\Proyecto Liggo 2026\Liggo-api\Proyecto-LIGGO\Liggo-api\src\liggo-blazor\obj\Debug\net8.0\compressed\lgjacmxw22-{0}-4v5xveoh5x-4v5xveoh5x.gz

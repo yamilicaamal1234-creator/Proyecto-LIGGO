@@ -1,11 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Liggo.Domain.Entities.Operations;
 
 public class SystemUser
 {
     public string Id { get; set; } = string.Empty;
+    [NotMapped]
     public AuthData Auth { get; set; } = new();
+    [NotMapped]
     public GlobalProfile GlobalProfile { get; set; } = new();
     public string ActiveTenantId { get; set; } = string.Empty;
+    [NotMapped]
     public List<string> Tenants { get; set; } = new();
     public DateTime CreatedAt { get; set; }
 }

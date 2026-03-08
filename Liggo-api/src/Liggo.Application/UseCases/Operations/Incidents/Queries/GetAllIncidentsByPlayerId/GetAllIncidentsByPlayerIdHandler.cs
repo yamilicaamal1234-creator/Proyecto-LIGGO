@@ -18,18 +18,18 @@ public class GetAllIncidentsByPlayerIdHandler : IRequestHandler<GetAllIncidentsB
 
     public async Task<IEnumerable<IncidentResponse>> Handle(GetAllIncidentsByPlayerIdQuery request, CancellationToken cancellationToken)
     {
-        var incidents = await _incidentRepository.GetAllByPlayerIdAsync(request.PlayerId, cancellationToken);
+        var incidents = await _incidentRepository.GetAllByPlayerIdAsync(request.PlayerId, Guid.Empty);
 
         if (incidents == null || !incidents.Any())
             return Enumerable.Empty<IncidentResponse>();
 
         return incidents.Select(incident => new IncidentResponse(
             incident.Id,
-            incident.Type,
+            incident.Type.ToString(),
             incident.Severity,
             new IncidentContextDto(incident.Context.Student, incident.Context.Event),
             incident.Description,
-            incident.Status
+            incident.Status.ToString()
         ));
     }
 }

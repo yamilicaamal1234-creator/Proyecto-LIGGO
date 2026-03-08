@@ -1,17 +1,26 @@
-namespace Liggo.Domain.Entities.Operations;
+using System;
+using Liggo.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Incident
+namespace Liggo.Domain.Entities.Operations
 {
-    public string Id { get; set; } = string.Empty;
-    public string Type { get; set; } = "injury"; // "injury", "discipline"
-    public string Severity { get; set; } = "low"; // "low", "medium", "high"
-    public IncidentContext Context { get; set; } = new();
-    public string Description { get; set; } = string.Empty;
-    public string Status { get; set; } = "open"; // "open", "closed"
-}
+    public class Incident : BaseEntity
+    {
+        public Guid PlayerId { get; set; }
+        public IncidentType Type { get; set; }
+        public string Severity { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public IncidentStatus Status { get; set; }
+        [NotMapped]
+        public IncidentContext Context { get; set; } = new();
 
-public class IncidentContext
-{
-    public string Student { get; set; } = string.Empty;
-    public string Event { get; set; } = string.Empty; // Ej. "Vs Tigres"
+        // Navigation property
+        public Player Player { get; set; } = null!;
+    }
+
+    public class IncidentContext
+    {
+        public string Student { get; set; } = string.Empty;
+        public string Event { get; set; } = string.Empty;
+    }
 }

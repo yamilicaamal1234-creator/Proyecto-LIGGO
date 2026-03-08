@@ -18,11 +18,11 @@ public class GetLedgerTransactionByIdHandler : IRequestHandler<GetLedgerTransact
 
     public async Task<LedgerTransactionResponse?> Handle(GetLedgerTransactionByIdQuery request, CancellationToken cancellationToken)
     {
-        var t = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        var t = await _repository.GetByIdAsync(Guid.Parse(request.Id), Guid.Empty);
         if (t == null) return null;
 
         return new LedgerTransactionResponse(
-            t.Id, t.Type, t.Amount, t.Concept, t.Method, t.TransactionRef,
+            t.Id.ToString(), t.Type, t.Amount, t.Concept, t.Method, t.TransactionRef,
             new TransactionRelatedUsersDto(t.RelatedUsers.PayerName, t.RelatedUsers.StudentName), t.CreatedAt);
     }
 }
