@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1075187934729",
+    "project_id": "liggo-pi-3a2a4",
+    "storage_bucket": "liggo-pi-3a2a4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075187934729:android:a21446b5b646ca4c327ad8",
+        "android_client_info": {
+          "package_name": "com.example.liggo_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075187934729-ccqu0fdqb1va7s170h9oelq7htrk4ib1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADzxVwJ5yLc1WPNhznUoDb5oEbZpVa7gs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075187934729-ccqu0fdqb1va7s170h9oelq7htrk4ib1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

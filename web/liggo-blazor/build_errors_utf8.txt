@@ -1,0 +1,15 @@
+﻿  Determinando los proyectos que se van a restaurar...
+  Todos los proyectos est├ín actualizados para la restauraci├│n.
+C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\Services\ApiSimulatorHandler.cs(29,39): error CS0117: 'CustomerDto' no contiene una definici├│n para 'Name' [C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\liggo-blazor.csproj]
+C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\Services\ApiSimulatorHandler.cs(29,66): error CS0117: 'CustomerDto' no contiene una definici├│n para 'ContactEmail' [C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\liggo-blazor.csproj]
+C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\Services\ApiSimulatorHandler.cs(29,106): error CS0117: 'CustomerDto' no contiene una definici├│n para 'Status' [C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\liggo-blazor.csproj]
+
+ERROR al compilar.
+
+C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\Services\ApiSimulatorHandler.cs(29,39): error CS0117: 'CustomerDto' no contiene una definici├│n para 'Name' [C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\liggo-blazor.csproj]
+C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\Services\ApiSimulatorHandler.cs(29,66): error CS0117: 'CustomerDto' no contiene una definici├│n para 'ContactEmail' [C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\liggo-blazor.csproj]
+C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\Services\ApiSimulatorHandler.cs(29,106): error CS0117: 'CustomerDto' no contiene una definici├│n para 'Status' [C:\Users\Mili\Documents\PROYECTO.LIGGO\Proyecto-LIGGO\web\liggo-blazor\liggo-blazor.csproj]
+    0 Advertencia(s)
+    3 Errores
+
+Tiempo transcurrido 00:00:06.15

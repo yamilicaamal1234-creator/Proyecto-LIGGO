@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZJTFle2w+Dw=",
+  "dgSpecHash": "Icq/WB4AsTw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj",
+  "projectFilePath": "C:\\Users\\Mili\\Documents\\PROYECTO.LIGGO\\Proyecto-LIGGO\\Liggo-api\\src\\Liggo.Application\\Liggo.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mili\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\Mili\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",

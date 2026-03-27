@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\liggo-blazor\\liggo-blazor.csproj": {}
+    "C:\\Users\\Mili\\Documents\\PROYECTO.LIGGO\\Proyecto-LIGGO\\web\\liggo-blazor\\liggo-blazor.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\liggo-blazor\\liggo-blazor.csproj": {
+    "C:\\Users\\Mili\\Documents\\PROYECTO.LIGGO\\Proyecto-LIGGO\\web\\liggo-blazor\\liggo-blazor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\liggo-blazor\\liggo-blazor.csproj",
+        "projectUniqueName": "C:\\Users\\Mili\\Documents\\PROYECTO.LIGGO\\Proyecto-LIGGO\\web\\liggo-blazor\\liggo-blazor.csproj",
         "projectName": "liggo-blazor",
-        "projectPath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\liggo-blazor\\liggo-blazor.csproj",
+        "projectPath": "C:\\Users\\Mili\\Documents\\PROYECTO.LIGGO\\Proyecto-LIGGO\\web\\liggo-blazor\\liggo-blazor.csproj",
         "packagesPath": "C:\\Users\\Mili\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\liggo-blazor\\obj\\",
+        "outputPath": "C:\\Users\\Mili\\Documents\\PROYECTO.LIGGO\\Proyecto-LIGGO\\web\\liggo-blazor\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
