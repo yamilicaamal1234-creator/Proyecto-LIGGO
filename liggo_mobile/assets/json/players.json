@@ -1,0 +1,16 @@
+{
+ "players":[
+  {
+   "id":1,
+   "name":"Juan Lopez",
+   "team":"Infantil A",
+   "tutorId":2
+  },
+  {
+   "id":2,
+   "name":"Maria Garcia",
+   "team":"Femenil Sub-15",
+   "tutorId":2
+  }
+ ]
+}

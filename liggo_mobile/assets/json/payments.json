@@ -1,0 +1,4 @@
+{"payments": [
+  {"id": 1, "month": "Marzo", "amount": 50.0, "status": "pagado", "date": "2026-03-05", "playerId": 1},
+  {"id": 2, "month": "Marzo", "amount": 50.0, "status": "pendiente", "date": "2026-03-05", "playerId": 2}
+]}

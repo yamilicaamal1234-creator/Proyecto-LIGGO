@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bv3k0+Up69I=",
+  "dgSpecHash": "+KdYe9fdMFg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Mili\\Documents\\Proyecto Liggo 2026\\Liggo-api\\Proyecto-LIGGO\\Liggo-api\\src\\liggo-blazor\\liggo-blazor.csproj",
+  "projectFilePath": "C:\\Users\\Mili\\Documents\\PROYECTO.LIGGO\\Proyecto-LIGGO\\web\\liggo-blazor\\liggo-blazor.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mili\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.20\\microsoft.aspnetcore.authorization.8.0.20.nupkg.sha512",
     "C:\\Users\\Mili\\.nuget\\packages\\microsoft.aspnetcore.components\\8.0.20\\microsoft.aspnetcore.components.8.0.20.nupkg.sha512",
@@ -32,10 +32,10 @@
     "C:\\Users\\Mili\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.23\\microsoft.net.illink.tasks.8.0.23.nupkg.sha512",
     "C:\\Users\\Mili\\.nuget\\packages\\microsoft.net.sdk.webassembly.pack\\10.0.2\\microsoft.net.sdk.webassembly.pack.10.0.2.nupkg.sha512",
     "C:\\Users\\Mili\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512",
-    "C:\\Users\\Mili\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.23\\microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512",
     "C:\\Users\\Mili\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.23\\microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
     "C:\\Users\\Mili\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\8.0.23\\microsoft.netcore.app.runtime.mono.browser-wasm.8.0.23.nupkg.sha512",
-    "C:\\Users\\Mili\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.23\\microsoft.windowsdesktop.app.ref.8.0.23.nupkg.sha512"
+    "C:\\Users\\Mili\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.23\\microsoft.windowsdesktop.app.ref.8.0.23.nupkg.sha512",
+    "C:\\Users\\Mili\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.23\\microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512"
   ],
   "logs": []
 }

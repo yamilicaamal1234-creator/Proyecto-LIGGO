@@ -1,0 +1,14 @@
+{
+ "subscriptions":[
+  {
+   "userId":1,
+   "plan":"Academia",
+   "status":"activo"
+  },
+  {
+   "userId":2,
+   "plan":"Individual",
+   "status":"activo"
+  }
+ ]
+}

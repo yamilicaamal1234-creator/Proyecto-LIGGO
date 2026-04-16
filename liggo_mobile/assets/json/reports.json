@@ -1,0 +1,12 @@
+{
+ "reports":[
+  {
+   "reportId":1,
+   "coachId":1,
+   "playerName":"Juan Lopez",
+   "date":"2026-03-10",
+   "performance":"Bueno",
+   "comments":"Buen desempeño en el entrenamiento"
+  }
+ ]
+}
