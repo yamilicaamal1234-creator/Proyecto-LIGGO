@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Arquitectura\\Proyecto-LIGGO\\api\\Liggo.Domain\\Liggo.Domain.csproj": {}
+    "D:\\Arquitectura\\Proyecto-LIGGO\\Api\\Liggo.Domain\\Liggo.Domain.csproj": {}
   },
   "projects": {
-    "D:\\Arquitectura\\Proyecto-LIGGO\\api\\Liggo.Domain\\Liggo.Domain.csproj": {
+    "D:\\Arquitectura\\Proyecto-LIGGO\\Api\\Liggo.Domain\\Liggo.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Arquitectura\\Proyecto-LIGGO\\api\\Liggo.Domain\\Liggo.Domain.csproj",
+        "projectUniqueName": "D:\\Arquitectura\\Proyecto-LIGGO\\Api\\Liggo.Domain\\Liggo.Domain.csproj",
         "projectName": "Liggo.Domain",
-        "projectPath": "D:\\Arquitectura\\Proyecto-LIGGO\\api\\Liggo.Domain\\Liggo.Domain.csproj",
+        "projectPath": "D:\\Arquitectura\\Proyecto-LIGGO\\Api\\Liggo.Domain\\Liggo.Domain.csproj",
         "packagesPath": "C:\\Users\\Natsu\\.nuget\\packages\\",
-        "outputPath": "D:\\Arquitectura\\Proyecto-LIGGO\\api\\Liggo.Domain\\obj\\",
+        "outputPath": "D:\\Arquitectura\\Proyecto-LIGGO\\Api\\Liggo.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Natsu\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -43,6 +43,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

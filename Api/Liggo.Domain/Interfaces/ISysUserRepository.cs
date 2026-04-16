@@ -6,7 +6,7 @@ namespace Liggo.Domain.Interfaces
     {
         Task<SysUser?> GetByIdAsync(string firebaseUid, CancellationToken cancellationToken);
         Task AddAsync(SysUser sysUser, CancellationToken cancellationToken);
-        Task UpdateAsync(SysUser sysUser, CancellationToken cancellationToken);
+        Task UpdatePartialAsync(string sysUser, Dictionary<string, object> updates,CancellationToken cancellationToken);
         Task AddTenantAccessAsync(string firebaseUid, string newSchoolId, CancellationToken cancellationToken);
     }
 }

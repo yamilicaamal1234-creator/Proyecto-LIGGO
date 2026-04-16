@@ -2,6 +2,7 @@ using FluentValidation;
 using MediatR;
 using Liggo.Domain.Entities.Relational;
 using Liggo.Domain.Interfaces;
+using Liggo.Application.Interfaces;
 
 namespace Liggo.Application.Functions.Schools.Commands
 {
@@ -26,22 +27,11 @@ namespace Liggo.Application.Functions.Schools.Commands
         public CreateSchoolCommandValidator()
         {
             // Gracias a FluentValidation, evitamos los "if" feos
-            RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("El nombre de la escuela es obligatorio.")
-                .MaximumLength(100).WithMessage("El nombre no puede exceder los 100 caracteres.");
-
-            RuleFor(x => x.PlanId)
-                .GreaterThan(0).WithMessage("Debe seleccionar un plan válido.");
-
-            RuleFor(x => x.Currency)
-                .Length(3).WithMessage("La moneda debe tener exactamente 3 letras (ej. MXN).");
-
-            RuleFor(x => x.AdminEmail)
-                .NotEmpty()
-                .EmailAddress().WithMessage("Debe proporcionar un email válido para el administrador.");
-
-            RuleFor(x => x.AdminFirebaseUid)
-                .NotEmpty().WithMessage("El UID de Firebase es obligatorio para vincular la cuenta.");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("El nombre de la escuela es obligatorio.").MaximumLength(100).WithMessage("El nombre no puede exceder los 100 caracteres.");
+            RuleFor(x => x.PlanId).GreaterThan(0).WithMessage("Debe seleccionar un plan válido.");
+            RuleFor(x => x.Currency).Length(3).WithMessage("La moneda debe tener exactamente 3 letras (ej. MXN).");
+            RuleFor(x => x.AdminEmail).NotEmpty().EmailAddress().WithMessage("Debe proporcionar un email válido para el administrador.");
+            RuleFor(x => x.AdminFirebaseUid).NotEmpty().WithMessage("El UID de Firebase es obligatorio para vincular la cuenta.");
         }
     }
 
@@ -55,10 +45,7 @@ namespace Liggo.Application.Functions.Schools.Commands
         private readonly IFirebaseService _firebaseService;
 
         // Inyectamos las interfaces que creamos en el Domain
-        public CreateSchoolCommandHandler(
-            IApplicationDbContext context, 
-            IUnitOfWork unitOfWork, 
-            IFirebaseService firebaseService)
+        public CreateSchoolCommandHandler( IApplicationDbContext context, IUnitOfWork unitOfWork, IFirebaseService firebaseService)
         {
             _context = context;
             _unitOfWork = unitOfWork;
@@ -86,7 +73,7 @@ namespace Liggo.Application.Functions.Schools.Commands
                 await _context.Schools.AddAsync(school, cancellationToken);
 
                 // 3. Preparamos al Usuario Dueño (MySQL)
-                var admin = new User
+                var admin = new Liggo.Domain.Entities.Relational.User
                 {
                     FirebaseUid = request.AdminFirebaseUid,
                     Email = request.AdminEmail,

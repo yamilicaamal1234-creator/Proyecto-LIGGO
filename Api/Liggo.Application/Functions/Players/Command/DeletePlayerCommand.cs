@@ -1,4 +1,4 @@
-using mediatR;
+using MediatR;
 using Liggo.Domain.Interfaces;
 using Liggo.Application.Interfaces;
 

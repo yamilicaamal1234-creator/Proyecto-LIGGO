@@ -39,7 +39,7 @@ namespace Liggo.Application.Functions.Players.Queries
                 Position = player.Info.Position,
                 AgeOrDob = player.Info.Dob,
                 TotalGoals = player.Stats.Goals,
-                AverangeRating = player.Stats.AvgRating
+                AverageRating = player.Stats.AvgRating
             };
 
             return dto;

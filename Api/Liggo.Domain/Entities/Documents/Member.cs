@@ -5,6 +5,7 @@ namespace Liggo.Domain.Entities.Documents
     public class Member
     {
         public string Id { get; set; } = string.Empty;
+        public string MemberName { get; set; } = string.Empty;
         public string Uid { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
         public MemberProfile Profile { get; set; } = new();

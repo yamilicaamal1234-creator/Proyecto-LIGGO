@@ -6,7 +6,7 @@ namespace Liggo.Domain.Entities.Documents
         public string EventType { get; set; } = string.Empty;
         public EventMetaData MetaData { get; set; } = new();
         public string Status { get; set; } = string.Empty;
-        public Dictionary<string, AttendenceEntry> AttendenceMap { get; set; } = new();
+        public Dictionary<string, AttendanceEntry> AttendanceMap { get; set; } = new();
     }
     
     public class EventMetaData
@@ -18,7 +18,7 @@ namespace Liggo.Domain.Entities.Documents
         public GeoCoordinates Geo { get; set; } = new();
     }
 
-    public class AttendenceEntry
+    public class AttendanceEntry
     {
         public string Status { get; set; } = string.Empty;
         public int? Goals { get; set; }
